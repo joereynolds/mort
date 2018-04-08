@@ -1,3 +1,4 @@
+const child_process = require("child_process");
 import { IGrep } from "../interfaces/IGrep";
 import { Selectors } from "../selectors";
 
@@ -11,6 +12,24 @@ class RipGrep implements IGrep {
         const selectors = new Selectors();
         const cleanSelectors = selectors.clean(selectors.fromFile(cssFilePath));
         return selectors.findUsages(this, searchOnly, cleanSelectors);
+    }
+
+    public call(selector: string, path: string) {
+        const call = child_process.spawnSync(
+            this.executable,
+            [
+                this.ignoreCase,
+                this.filesToIgnore,
+                selector,
+                path,
+            ],
+            {
+                stdio: "pipe",
+                encoding: "utf-8",
+            },
+        );
+
+        return call;
     }
 }
 

@@ -1,5 +1,4 @@
 const fs = require("fs");
-const child_process = require("child_process");
 import { IGrep } from "./interfaces/IGrep";
 
 class Selectors {
@@ -52,20 +51,7 @@ class Selectors {
         const foundSelectors: any[] = [];
         selectors.forEach(selector => {
             // TODO, move this call into each grepProgram
-            const call = child_process.spawnSync(
-                grepProgram.executable,
-                [
-                    grepProgram.ignoreCase,
-                    grepProgram.filesToIgnore,
-                    selector,
-                    path,
-                ],
-                {
-                    stdio: "pipe",
-                    encoding: "utf-8",
-                },
-            );
-
+            const call = grepProgram.call(selector, path);
             const listOfFiles: string[] = this.getFilesFromOutput(call.output[1]);
 
             foundSelectors.push({

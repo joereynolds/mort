@@ -4,6 +4,7 @@ interface IGrep {
     readonly filesToIgnore: string;
 
     run(cssFilePath: string): any[];
+    call(selector: string, path: string): any;
 }
 
 export { IGrep };

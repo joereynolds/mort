@@ -12,6 +12,10 @@ class GitGrep implements IGrep {
         const cleanSelectors = selectors.clean(selectors.fromFile(cssFilePath));
         return selectors.findUsages(this, searchOnly, cleanSelectors);
     }
+
+    public call(selector: string, path: string) {
+        return;
+    }
 }
 
 export { GitGrep };
