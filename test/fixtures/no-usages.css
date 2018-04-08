@@ -1,0 +1,20 @@
+/**
+ * None of these selectors are present anywhere.
+ * They should be correctly reported.
+ */
+
+.no-usages-for-me {
+
+}
+
+#nor-me-id {
+
+}
+
+.none-for-me-but-i:hover {
+
+}
+
+#i-am-also:invalid {
+
+}

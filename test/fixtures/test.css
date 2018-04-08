@@ -1,0 +1,10 @@
+#a-valid-id {
+}
+
+.a-valid-class {
+}
+
+/* This should not be picked up */
+main {
+    font-size: 12px;
+}
