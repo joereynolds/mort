@@ -63,7 +63,9 @@ const provider = [
 provider.forEach(provide => {
     test(`it reports findings for selector: ${provide.input}`, () => {
         const ripgrep = new RipGrep();
-        const actual = ripgrep.findUsagesOfSelectors(
+        const selectors = new Selectors();
+        const actual = selectors.findUsages(
+            ripgrep,
             "test/fixtures",
             [provide.input],
         );

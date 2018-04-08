@@ -1,4 +1,6 @@
 const fs = require("fs");
+const child_process = require("child_process");
+import { IGrep } from "./interfaces/IGrep";
 
 class Selectors {
 
@@ -32,6 +34,49 @@ class Selectors {
         return selectors.filter(selector => selector !== "");
     }
 
+    /**
+     * Brings back an array of objects in the following format:
+     * [
+     *     {
+     *         selector: my-id-selector,
+     *         usages: 3,
+     *         foundIn: [
+     *             views/content/customer.php
+     *             views/content/dashboard.php
+     *             views/content/shop.php
+     *         ]
+     *     }
+     * ]
+     */
+    public findUsages(grepProgram: IGrep, path: string, selectors: string[]) {
+        const foundSelectors: any[] = [];
+        selectors.forEach(selector => {
+            const call = child_process.spawnSync(
+                grepProgram.executable,
+                [
+                    grepProgram.ignoreCase,
+                    grepProgram.filesToIgnore,
+                    selector,
+                    path,
+                ],
+                {
+                    stdio: "pipe",
+                    encoding: "utf-8",
+                },
+            );
+
+            const listOfFiles: string[] = this.getFilesFromOutput(call.output[1]);
+
+            foundSelectors.push({
+                selector,
+                usages: listOfFiles.length,
+                foundIn: listOfFiles.sort(),
+            });
+        });
+
+        return foundSelectors;
+    }
+
     private removePseudoSelectors(selectors: string[]): string[] {
         const selectorMatch = /(:hover|:valid|:invalid)/g;
         return selectors.filter(selector => !selector.match(selectorMatch));
@@ -43,6 +88,15 @@ class Selectors {
         });
 
         return cleanSelectors;
+    }
+
+    private getFilesFromOutput(output: string): string[] {
+        const matches: string[] = [];
+        output.split("\n").forEach(fileMatch => {
+            matches.push(fileMatch.split(":")[0]);
+        });
+
+        return matches.filter(match => match !== "");
     }
 }
 

@@ -6,7 +6,7 @@ class GitGrep implements IGrep {
 
     public readonly executable: string = "git grep";
     public readonly ignoreCase: string = "-i";
-    public readonly filesToIgnore: string = ":!.css :!.scss";
+    public readonly filesToIgnore: string = "-- '.' ':!*.css' ':!.*scss";
 
     public run(cssFilePath: string, searchOnly: string = "."): string[]  {
         return;
