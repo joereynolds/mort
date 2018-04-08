@@ -1,16 +1,16 @@
-const child_process = require("child_process");
-const fs = require("fs");
 import { IGrep } from "../interfaces/IGrep";
+import { Selectors } from "../selectors";
 
 class GitGrep implements IGrep {
 
     public readonly executable: string = "git grep";
     public readonly ignoreCase: string = "-i";
-    public readonly filesToIgnore: string = "-- '.' ':!*.css' ':!.*scss";
+    public readonly filesToIgnore: string = "'.' ':!*.css' ':!.*scss";
 
     public run(cssFilePath: string, searchOnly: string = "."): string[]  {
-        return;
-
+        const selectors = new Selectors();
+        const cleanSelectors = selectors.clean(selectors.fromFile(cssFilePath));
+        return selectors.findUsages(this, searchOnly, cleanSelectors);
     }
 }
 

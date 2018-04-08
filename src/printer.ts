@@ -2,7 +2,7 @@ const chalk = require("chalk");
 
 class Printer {
 
-    private readonly verboseMessage: string = "Verbose output is being displayed"
+    private readonly verboseMessage: string = "Running mort in verbose mode";
 
     /**
      * Prints out the usages for each selector if they are <= userDefinedUsageCount

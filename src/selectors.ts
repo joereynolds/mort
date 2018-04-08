@@ -51,6 +51,7 @@ class Selectors {
     public findUsages(grepProgram: IGrep, path: string, selectors: string[]) {
         const foundSelectors: any[] = [];
         selectors.forEach(selector => {
+            // TODO, move this call into each grepProgram
             const call = child_process.spawnSync(
                 grepProgram.executable,
                 [
