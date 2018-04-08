@@ -2,6 +2,14 @@
 
 Naively detects dead CSS.
 
+# Usage
+
+```
+mort your-css-file.css
+```
+
+Simply `cd` to the root of the project you're interested in and run `mort your-css-file.css` to scan that css file against your codebase.
+
 # Requirements
 
 - ripgrep
