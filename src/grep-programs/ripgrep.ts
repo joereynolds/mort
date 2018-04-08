@@ -51,7 +51,7 @@ class RipGrep implements IGrep {
             foundSelectors.push({
                 selector,
                 usages: listOfFiles.length,
-                foundIn: listOfFiles,
+                foundIn: listOfFiles.sort(),
             });
         });
 

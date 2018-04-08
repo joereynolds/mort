@@ -41,8 +41,8 @@ const provider = [
                 selector: "a-valid-id",
                 usages: 2,
                 foundIn: [
-                    "test/fixtures/test.html",
                     "test/fixtures/identical-to-test.html",
+                    "test/fixtures/test.html",
                 ],
             },
         ],
@@ -67,6 +67,7 @@ provider.forEach(provide => {
             "test/fixtures",
             [provide.input],
         );
+
         expect(actual).toEqual(provide.expected);
     });
 
