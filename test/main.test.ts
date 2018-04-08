@@ -1,4 +1,5 @@
 import { RipGrep } from "../src/grep-programs/ripgrep";
+import { Selectors } from "../src/selectors";
 const child_process = require("child_process");
 
 test("jest is running correctly", () => {
@@ -13,23 +14,23 @@ test("our grep program returns an object of results", () => {
 test("it ignores pseudoselectors", () => {
     const expected = ["a-valid-id"];
     const input = ["a-valid-id-with-pseudo:hover", "a-valid-id"];
-    const ripgrep = new RipGrep();
-    const actual = ripgrep.cleanCssSelectors(input);
+    const selectors = new Selectors();
+    const actual = selectors.clean(input);
     expect(expected).toEqual(actual);
 });
 
 test("it strips out `#` and `.` from selectors", () => {
     const expected = ["a-valid-id", "a-valid-class"];
     const input = ["#a-valid-id", ".a-valid-class"];
-    const ripgrep = new RipGrep();
-    const actual = ripgrep.cleanCssSelectors(input);
+    const selectors = new Selectors();
+    const actual = selectors.clean(input);
     expect(expected).toEqual(actual);
 });
 
 test("it only gets ids and classes", () => {
     const expected = ["#a-valid-id {", ".a-valid-class {"];
-    const ripgrep = new RipGrep();
-    expect(ripgrep.getSelectors("test/fixtures/test.css")).toEqual(expected);
+    const selectors = new Selectors();
+    expect(selectors.fromFile("test/fixtures/test.css")).toEqual(expected);
 });
 
 const provider = [

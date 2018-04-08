@@ -1,6 +1,6 @@
 const child_process = require("child_process");
-const fs = require("fs");
 import { IGrep } from "../interfaces/IGrep";
+import { Selectors } from "../selectors";
 
 class RipGrep implements IGrep {
 
@@ -9,24 +9,9 @@ class RipGrep implements IGrep {
     public readonly filesToIgnore: string = "--iglob=!*.{css,scss}";
 
     public run(cssFilePath: string, searchOnly: string = "."): string[]  {
-        const selectors = this.getSelectors(cssFilePath);
-        const cleanSelectors = this.cleanCssSelectors(selectors);
+        const selectors = new Selectors();
+        const cleanSelectors = selectors.clean(selectors.fromFile(cssFilePath));
         return this.findUsagesOfSelectors(searchOnly, cleanSelectors);
-    }
-
-    /**
-     * Gets all ids and classes from cssFilePath
-     *
-     * @TODO move out of ripgrep
-     */
-    public getSelectors(cssFilePath: string): string[] {
-        const fileContents: string = fs.readFileSync(cssFilePath, "utf8");
-
-        const selectors = fileContents.split("\n").filter(selector => {
-            return (selector.startsWith("#") || selector.startsWith("."));
-        });
-
-        return selectors;
     }
 
     /**
@@ -76,15 +61,6 @@ class RipGrep implements IGrep {
     /**
      * @TODO move out of ripgrep
      */
-    public cleanCssSelectors(selectors: string[]): string[] {
-        selectors = this.removeNoiseFromSelectors(selectors);
-        selectors = this.removePseudoSelectors(selectors);
-        return selectors.filter(selector => selector !== "");
-    }
-
-    /**
-     * @TODO move out of ripgrep
-     */
     private getFilesFromOutput(output: string): string[] {
         const matches: string[] = [];
         output.split("\n").forEach(fileMatch => {
@@ -92,25 +68,6 @@ class RipGrep implements IGrep {
         });
 
         return matches.filter(match => match !== "");
-    }
-
-    /**
-     * @TODO move out of ripgrep
-     */
-    private removeNoiseFromSelectors(selectors: string[]): string[] {
-        const cleanSelectors = selectors.map(selector => {
-            return selector.replace(/(#|\.|\s*\{)/g, "");
-        });
-
-        return cleanSelectors;
-    }
-
-    /**
-     * @TODO move out of ripgrep
-     */
-    private removePseudoSelectors(selectors: string[]): string[] {
-        const selectorMatch = /(:hover|:valid|:invalid)/g;
-        return selectors.filter(selector => !selector.match(selectorMatch));
     }
 }
 
