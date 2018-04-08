@@ -18,11 +18,13 @@ program
 if (!program.args[0]) {
     console.log("Please supply a css file");
 } else {
+    const usages = ripgrep.run(
+        program.args[0],
+        program.args[1],
+    );
+
     printer.printUsages(
-        ripgrep.run(
-            program.args[0],
-            program.args[1],
-        ),
+        usages,
         0,
         program.verbose,
     );
