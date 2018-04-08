@@ -6,7 +6,7 @@
         "test": "jest test"
     },
     "bin": {
-        "deadcss": "./dist/src/main.js"
+        "mort": "./dist/src/main.js"
     },
     "dependencies": {
         "@types/jest": "^22.2.2",
