@@ -1,8 +1,8 @@
 {
+    "name": "mort",
     "scripts": {
         "build": "tsc",
         "lint": "tslint -c tslint.json -p tsconfig.json",
-        "start": "npm run build && electron ./dist/main.js",
         "test": "jest test"
     },
     "bin": {
