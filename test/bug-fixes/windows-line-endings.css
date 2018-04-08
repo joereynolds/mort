@@ -1,0 +1,21 @@
+.menu .active
+
+.hljs{
+    line-height:18px;
+    font-size:14px;
+    margin-bottom:30px;
+}
+
+.text ul,
+.text ol {
+    margin-left: 1em;
+}
+
+.song {
+    padding: 5px;
+    margin-bottom: 5px;
+    background: #f9f9f9;
+}
+
+.article + .article
+.article-tag

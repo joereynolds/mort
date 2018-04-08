@@ -20,7 +20,7 @@ class Selectors {
     public fromFile(file: string): string[] {
         const fileContents: string = fs.readFileSync(file, "utf8");
 
-        const selectors = fileContents.split("\n").filter(selector => {
+        const selectors = fileContents.split(/(\r\n|\n)/g).filter(selector => {
             return (selector.startsWith(this.id) || selector.startsWith(this.class));
         });
 
@@ -49,6 +49,7 @@ class Selectors {
      */
     public findUsages(grepProgram: IGrep, path: string, selectors: string[]) {
         const foundSelectors: any[] = [];
+
         selectors.forEach(selector => {
             // TODO, move this call into each grepProgram
             const call = grepProgram.call(selector, path);

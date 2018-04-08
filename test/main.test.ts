@@ -75,4 +75,20 @@ provider.forEach(provide => {
 
 });
 
+// Bug fix:
+// https://github.com/joereynolds/mort/issues/6
+test("It can handle unix and windows line endings", () => {
+    const expected = [
+        ".menu .active",
+        ".hljs{",
+        ".text ul,",
+        ".text ol {",
+        ".song {",
+        ".article + .article",
+        ".article-tag",
+    ];
+    const selectors = new Selectors();
+    expect(selectors.fromFile("test/bug-fixes/windows-line-endings.css")).toEqual(expected);
+});
+
 // Need a test that makes sure css files aren't in the list of found matches

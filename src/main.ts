@@ -12,7 +12,7 @@ const version = "0.1.0";
 program
     .version(version)
     .option("-u, --usage-count", "Show warnings for any css selector <= usage-count.")
-    .option("-v --verbose", "Detailed information about the matches will be displayed.", 0)
+    .option("-v, --verbose", "Detailed information about the matches will be displayed.", 0)
     .parse(process.argv);
 
 if (!program.args[0]) {
