@@ -3,8 +3,9 @@ language: node_js
 node_js:
     - "9"
 
-install:
-    - npm install
+sudo: true
+dist: trusty
 
-# scripts:
-#     - npm test
+install:
+    - sudo snap install rg
+    - npm install
