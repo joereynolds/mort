@@ -16,7 +16,7 @@ test("it ignores pseudoselectors", () => {
     const input = ["a-valid-id-with-pseudo:hover", "a-valid-id"];
     const selectors = new Selectors();
     const actual = selectors.clean(input);
-    expect(expected).toEqual(actual);
+    expect(actual).toEqual(expected);
 });
 
 test("it strips out `#` and `.` from selectors", () => {
@@ -24,13 +24,51 @@ test("it strips out `#` and `.` from selectors", () => {
     const input = ["#a-valid-id", ".a-valid-class"];
     const selectors = new Selectors();
     const actual = selectors.clean(input);
-    expect(expected).toEqual(actual);
+    expect(actual).toEqual(expected);
 });
 
 test("it only gets ids and classes", () => {
-    const expected = ["#a-valid-id {", ".a-valid-class {"];
+    const expected = ["#a-valid-id", ".a-valid-class"];
     const selectors = new Selectors();
     expect(selectors.fromFile("test/fixtures/test.css")).toEqual(expected);
+});
+
+test("it does not return duplicate elements", () => {
+
+    const input = [
+        "#a-test",
+        "#a-test",
+        "#a-test",
+        ".some-class",
+    ];
+
+    const expected = ["#a-test", ".some-class"];
+
+    const selectors = new Selectors();
+    const actual = selectors.getFrom(input);
+    expect(actual).toEqual(expected);
+});
+
+test("it gets all selectors for a rule that are ids or classes", () => {
+
+    const input = [
+        "#my-id-right-here .a-child #and-another-id",
+        // "table #an-id-inside-a-normal-element",
+        ".class tr #something",
+    ];
+
+    const expected = [
+        // "#an-id-inside-a-normal-element",
+        "#and-another-id",
+        "#my-id-right-here",
+        "#something",
+        ".a-child",
+        ".class",
+    ];
+
+    const selectors = new Selectors();
+    const actual = selectors.getFrom(input);
+    expect(actual).toEqual(expected);
 });
 
 const provider = [
@@ -79,13 +117,13 @@ provider.forEach(provide => {
 // https://github.com/joereynolds/mort/issues/6
 test("It can handle unix and windows line endings", () => {
     const expected = [
-        ".menu .active",
-        ".hljs{",
-        ".text ul,",
-        ".text ol {",
-        ".song {",
-        ".article + .article",
+        ".active",
+        ".article",
         ".article-tag",
+        ".hljs{",
+        ".menu",
+        ".song",
+        ".text",
     ];
     const selectors = new Selectors();
     expect(selectors.fromFile("test/bug-fixes/windows-line-endings.css")).toEqual(expected);

@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
 
+        "lib": ["es7"],
         "target": "es2015",
         "module": "commonjs",
         "noImplicitAny": true,

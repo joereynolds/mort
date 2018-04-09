@@ -19,12 +19,46 @@ class Selectors {
 
     public fromFile(file: string): string[] {
         const fileContents: string = fs.readFileSync(file, "utf8");
+        const selectors = this.getFrom(fileContents.split(/(\r\n|\n)/g));
 
-        const selectors = fileContents.split(/(\r\n|\n)/g).filter(selector => {
+        return selectors;
+    }
+
+    /**
+     * Returns the selectors from a given source.
+     * It only gets ids and classes and child selectors
+     * are returned as a separate item.
+     */
+    public getFrom(selectors: string[]): string[] {
+        const filtered: string[] = selectors.filter(selector => {
             return (selector.startsWith(this.id) || selector.startsWith(this.class));
         });
 
-        return selectors;
+        const allSelectors: string[] = [];
+        // Goes through every selector from a stylesheet and
+        // makes sure that child selectors are also included
+        // For example
+        // "#a-valid-id .with-child"
+        // Is broken down into
+        // [
+        //     "#a-valid-id",
+        //     ".with-child"
+        // ]
+        //
+        // We also only push an element once, no duplicates.
+        filtered.forEach(selector => {
+            const elements = selector.split(" ");
+            elements.forEach(element => {
+                if (element.startsWith(this.id) || element.startsWith(this.class)) {
+                    if (!allSelectors.includes(element)) {
+                        allSelectors.push(element);
+                    }
+
+                }
+            });
+        });
+
+        return allSelectors.sort();
     }
 
     public clean(selectors: string[]): string[] {
@@ -63,6 +97,10 @@ class Selectors {
         });
 
         return foundSelectors;
+    }
+
+    private selectorIsIdOrClass(selector: string): boolean {
+        return (selector.startsWith(this.id) || selector.startsWith(this.class));
     }
 
     private removePseudoSelectors(selectors: string[]): string[] {
