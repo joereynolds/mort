@@ -34,7 +34,6 @@ test("it only gets ids and classes", () => {
 });
 
 test("it does not return duplicate elements", () => {
-
     const input = [
         "#a-test",
         "#a-test",
@@ -68,17 +67,6 @@ test("it gets all selectors for a rule that are ids or classes", () => {
 
     const selectors = new Selectors();
     const actual = selectors.getFrom(input);
-    expect(actual).toEqual(expected);
-});
-
-// Bug fix:
-// https://github.com/joereynolds/mort/issues/7
-test("it strips punctuation from the selector", () => {
-    const input = ["#id-with-comma,", ".class-with-comma,"];
-    const expected = ["id-with-comma", "class-with-comma"];
-    const selectors = new Selectors();
-    const actual = selectors.clean(input);
-
     expect(actual).toEqual(expected);
 });
 
@@ -139,5 +127,46 @@ test("It can handle unix and windows line endings", () => {
     const selectors = new Selectors();
     expect(selectors.fromFile("test/bug-fixes/windows-line-endings.css")).toEqual(expected);
 });
+
+// Bug fix:
+// https://github.com/joereynolds/mort/issues/7
+test("it strips punctuation from the selector", () => {
+    const input = ["#id-with-comma,", ".class-with-comma,"];
+    const expected = ["id-with-comma", "class-with-comma"];
+    const selectors = new Selectors();
+    const actual = selectors.clean(input);
+
+    expect(actual).toEqual(expected);
+});
+
+
+// TODO
+// Bug fix:
+// https://github.com/joereynolds/mort/issues/8
+// test("it searches chained selectors separately", () => {
+//     const input = [
+//         ".a-class.chained-with-another",
+//         "#an-id-chained.with-a-class",
+//         ".a-class-chained#with-an-id",
+//         "#these-are#both-ids",
+//     ];
+
+//     const expected = [
+//         "#an-id-chained",
+//         "#both-ids",
+//         "#these-are",
+//         "#with-an-id",
+//         ".a-class",
+//         ".a-class-chained",
+//         ".chained-with-another",
+//         ".with-a-class",
+//     ];
+
+//     const selectors = new Selectors();
+//     const actual = selectors.getFrom(input);
+
+//     expect(actual).toEqual(expected);
+
+// });
 
 // Need a test that makes sure css files aren't in the list of found matches

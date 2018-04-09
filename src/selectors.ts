@@ -104,7 +104,7 @@ class Selectors {
     }
 
     private removePseudoSelectors(selectors: string[]): string[] {
-        const selectorMatch = /(:hover|:valid|:invalid)/g;
+        const selectorMatch = /(:hover|:valid|:invalid|:active|:focus|::before|::after|:first-child|:not)/g;
         return selectors.filter(selector => !selector.match(selectorMatch));
     }
 
