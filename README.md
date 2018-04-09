@@ -4,8 +4,14 @@ Naively detects dead CSS.
 
 # Installing
 
+There is no official package for mort yet, but you can do the following if you'd like to try it:
+
 ```
-npm install -g mort-css
+git clone https://github.com/joereynolds/mort 
+cd mort
+npm install 
+npm run build
+npm link
 ```
 
 # Usage

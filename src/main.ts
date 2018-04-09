@@ -7,7 +7,7 @@ const program = require("commander");
 
 const ripgrep = new RipGrep();
 const printer = new Printer();
-const version = "0.1.0";
+const version = "0.1.2";
 
 program
     .version(version)
