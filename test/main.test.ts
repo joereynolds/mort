@@ -71,6 +71,17 @@ test("it gets all selectors for a rule that are ids or classes", () => {
     expect(actual).toEqual(expected);
 });
 
+// Bug fix:
+// https://github.com/joereynolds/mort/issues/7
+test("it strips punctuation from the selector", () => {
+    const input = ["#id-with-comma,", ".class-with-comma,"];
+    const expected = ["id-with-comma", "class-with-comma"];
+    const selectors = new Selectors();
+    const actual = selectors.clean(input);
+
+    expect(actual).toEqual(expected);
+});
+
 const provider = [
     {
         input: "a-valid-id",
