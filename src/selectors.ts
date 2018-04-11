@@ -110,7 +110,7 @@ class Selectors {
 
     private removeNoiseFromSelectors(selectors: string[]): string[] {
         const cleanSelectors = selectors.map(selector => {
-            return selector.replace(/(#|\.|,|\s*\{)/g, "");
+            return selector.replace(/(#|\.|,|\s*\{|\[(\S*)\])/g, "");
         });
 
         return cleanSelectors;

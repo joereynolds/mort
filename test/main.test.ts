@@ -33,6 +33,19 @@ test("it only gets ids and classes", () => {
     expect(selectors.fromFile("test/fixtures/test.css")).toEqual(expected);
 });
 
+test("It strips out attribute selectors", () => {
+    const input = [
+        "#a-valid-id[type=button]",
+        ".a-valid-class[something]",
+    ];
+
+    const expected = ["a-valid-id", "a-valid-class"];
+
+    const selectors = new Selectors();
+    const actual = selectors.clean(input);
+    expect(actual).toEqual(expected);
+});
+
 test("it does not return duplicate elements", () => {
     const input = [
         "#a-test",
