@@ -6,17 +6,6 @@ class Selectors {
     private readonly id: string = "#";
     private readonly class: string = ".";
 
-    private readonly pseudoSelectors: string[] = [
-        ":checked",
-        ":disabled",
-        ":focus",
-        ":hover",
-        ":invalid",
-        ":read-only",
-        ":required",
-        ":valid",
-    ];
-
     public fromFile(file: string): string[] {
         const fileContents: string = fs.readFileSync(file, "utf8");
         const selectors = this.getFrom(fileContents.split(/(\r\n|\n)/g));
@@ -104,7 +93,7 @@ class Selectors {
     }
 
     private removePseudoSelectors(selectors: string[]): string[] {
-        const selectorMatch = /(:hover|:valid|:invalid|:active|:focus|::before|::after|:first-child|:not)/g;
+        const selectorMatch = /(:+.*)/g;
         return selectors.filter(selector => !selector.match(selectorMatch));
     }
 
