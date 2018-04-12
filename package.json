@@ -12,6 +12,7 @@
     "dependencies": {
         "@types/node": "^9.6.2",
         "commander": "^2.15.1",
+        "split-retain": "^1.0.1",
         "typescript": "^2.8.1"
     },
     "devDependencies": {

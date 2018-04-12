@@ -1,4 +1,5 @@
 const fs = require("fs");
+const splitRetain = require("split-retain");
 import { IGrep } from "./interfaces/IGrep";
 
 class Selectors {
@@ -36,7 +37,7 @@ class Selectors {
         //
         // We also only push an element once, no duplicates.
         filtered.forEach(selector => {
-            const elements = selector.split(" ");
+            const elements: any[] = splitRetain(selector, /(\.|#|\s+)/g, { leadingSeparator: true });
             elements.forEach(element => {
                 if (element.startsWith(this.id) || element.startsWith(this.class)) {
                     if (!allSelectors.includes(element)) {

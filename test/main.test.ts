@@ -152,34 +152,30 @@ test("it strips punctuation from the selector", () => {
     expect(actual).toEqual(expected);
 });
 
-
 // TODO
 // Bug fix:
 // https://github.com/joereynolds/mort/issues/8
-// test("it searches chained selectors separately", () => {
-//     const input = [
-//         ".a-class.chained-with-another",
-//         "#an-id-chained.with-a-class",
-//         ".a-class-chained#with-an-id",
-//         "#these-are#both-ids",
-//     ];
+test("it searches chained selectors separately", () => {
+    const input = [
+        ".a-class.chained-with-another",
+        "#an-id-chained.with-a-class",
+        ".a-class-chained#with-an-id",
+        "#these-are#both-ids",
+    ];
 
-//     const expected = [
-//         "#an-id-chained",
-//         "#both-ids",
-//         "#these-are",
-//         "#with-an-id",
-//         ".a-class",
-//         ".a-class-chained",
-//         ".chained-with-another",
-//         ".with-a-class",
-//     ];
+    const expected = [
+        "#an-id-chained",
+        "#both-ids",
+        "#these-are",
+        "#with-an-id",
+        ".a-class",
+        ".a-class-chained",
+        ".chained-with-another",
+        ".with-a-class",
+    ];
 
-//     const selectors = new Selectors();
-//     const actual = selectors.getFrom(input);
+    const selectors = new Selectors();
+    const actual = selectors.getFrom(input);
 
-//     expect(actual).toEqual(expected);
-
-// });
-
-// Need a test that makes sure css files aren't in the list of found matches
+    expect(actual).toEqual(expected);
+});
