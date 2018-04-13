@@ -153,6 +153,7 @@ test("it strips punctuation from the selector", () => {
     expect(actual).toEqual(expected);
 });
 
+// TODO
 // Bug fix:
 // https://github.com/joereynolds/mort/issues/8
 test("it searches chained selectors separately", () => {
@@ -174,15 +175,6 @@ test("it searches chained selectors separately", () => {
         ".with-a-class",
     ];
 
-    const selectors = new Selectors();
-    const actual = selectors.getFrom(input);
-
-    expect(actual).toEqual(expected);
-});
-
-test("it finds selectors after HTML elements", () => {
-    const input = ["tr #an-id"];
-    const expected = ["#an-id"];
     const selectors = new Selectors();
     const actual = selectors.getFrom(input);
 
