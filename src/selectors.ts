@@ -20,10 +20,6 @@ class Selectors {
      * are returned as a separate item.
      */
     public getFrom(selectors: string[]): string[] {
-        const filtered: string[] = selectors.filter(selector => {
-            return (selector.startsWith(this.id) || selector.startsWith(this.class));
-        });
-
         const allSelectors: string[] = [];
         // Goes through every selector from a stylesheet and
         // makes sure that child selectors are also included
@@ -36,10 +32,12 @@ class Selectors {
         // ]
         //
         // We also only push an element once, no duplicates.
-        filtered.forEach(selector => {
+        selectors.forEach(selector => {
             const elements: any[] = splitRetain(selector, /(\.|#|\s+)/g, { leadingSeparator: true });
             elements.forEach(element => {
-                if (this.selectorIsIdOrClass(element) && !allSelectors.includes(element)) {
+                if (this.selectorIsIdOrClass(element)
+                    && !allSelectors.includes(element)
+                    && !this.selectorIsColorCode(element)) {
                     allSelectors.push(element);
                 }
             });
@@ -94,6 +92,11 @@ class Selectors {
 
     private selectorIsIdOrClass(selector: string): boolean {
         return (selector.startsWith(this.id) || selector.startsWith(this.class));
+    }
+
+    private selectorIsColorCode(selector: string): boolean {
+        const match = selector.match(/#([0-9a-fA-F]{3}){1,2}/g);
+        return Boolean(match);
     }
 
     private removePseudoSelectors(selectors: string[]): string[] {
