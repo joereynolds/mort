@@ -107,7 +107,6 @@ const provider = [
             },
         ],
     },
-
 ];
 
 provider.forEach(provide => {
@@ -120,6 +119,8 @@ provider.forEach(provide => {
             [provide.input],
         );
 
+        // TODO - Test that commandUsed is correct
+        delete actual[0].commandUsed;
         expect(actual).toEqual(provide.expected);
     });
 

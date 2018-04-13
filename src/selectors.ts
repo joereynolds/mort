@@ -39,11 +39,8 @@ class Selectors {
         filtered.forEach(selector => {
             const elements: any[] = splitRetain(selector, /(\.|#|\s+)/g, { leadingSeparator: true });
             elements.forEach(element => {
-                if (element.startsWith(this.id) || element.startsWith(this.class)) {
-                    if (!allSelectors.includes(element)) {
-                        allSelectors.push(element);
-                    }
-
+                if (this.selectorIsIdOrClass(element) && !allSelectors.includes(element)) {
+                    allSelectors.push(element);
                 }
             });
         });
@@ -75,7 +72,6 @@ class Selectors {
         const foundSelectors: any[] = [];
 
         selectors.forEach(selector => {
-            // TODO, move this call into each grepProgram
             const call = grepProgram.call(selector, path);
             const listOfFiles: string[] = this.getFilesFromOutput(call.output[1]);
 
@@ -83,6 +79,7 @@ class Selectors {
                 selector,
                 usages: listOfFiles.length,
                 foundIn: listOfFiles.sort(),
+                commandUsed: call.args.join(" "),
             });
         });
 

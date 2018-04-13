@@ -27,6 +27,8 @@ class Printer {
                 if (selector.foundIn.length) {
                     console.log(`  Found matches in: ${chalk.yellow(selector.foundIn.join(" & "))}.`);
                 }
+
+                console.log(`Command used was: ${chalk.yellow(selector.commandUsed)}`);
             }
         });
     }
