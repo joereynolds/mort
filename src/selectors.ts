@@ -75,11 +75,17 @@ class Selectors {
             const call = grepProgram.call(selector, path);
             const listOfFiles: string[] = this.getFilesFromOutput(call.output[1]);
 
+            let commandUsed = " ";
+
+            if (call && call.args) {
+                commandUsed = call.args.join(" ");
+            }
+
             foundSelectors.push({
                 selector,
                 usages: listOfFiles.length,
                 foundIn: listOfFiles.sort(),
-                commandUsed: call.args.join(" "),
+                commandUsed,
             });
         });
 

@@ -24,11 +24,12 @@ class Printer {
             }
 
             if (verboseOutput) {
-                if (selector.foundIn.length) {
-                    console.log(`  Found matches in: ${chalk.yellow(selector.foundIn.join(" & "))}.`);
+                // if (selector.foundIn.length) {
+                //     console.log(`  Found matches in: ${chalk.yellow(selector.foundIn.join(" & "))}.`);
+                // }
+                if (!selector.foundIn.length) {
+                    console.log(`Command used was: ${chalk.yellow(selector.commandUsed)}\n`);
                 }
-
-                console.log(`Command used was: ${chalk.yellow(selector.commandUsed)}`);
             }
         });
     }
