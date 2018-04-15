@@ -2,6 +2,7 @@
 
 import { GitGrep } from "./grep-programs/gitgrep";
 import { RipGrep } from "./grep-programs/ripgrep";
+import { IGrep } from "./interfaces/IGrep";
 import { Printer } from "./printer";
 import { Program } from "./program";
 
@@ -23,12 +24,12 @@ if (!program.args[0]) {
     console.log("Please supply a css file");
 } else {
 
-    const grepProgram = new RipGrep();
+    let grepProgram: IGrep;
     if (executable.isExecutable("rg")) {
-        const grepProgram = new RipGrep();
+        grepProgram = new RipGrep();
     } else if (executable.isExecutable("git")) {
         console.log("Ripgrep 'rg' not found, falling back to using 'git grep'");
-        const grepProgram = new GitGrep();
+        grepProgram = new GitGrep();
     } else {
         console.log("No compatible grep programs found. mort supports either ripgrep or git grep.");
     }

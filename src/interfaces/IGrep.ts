@@ -3,7 +3,7 @@ interface IGrep {
     readonly ignoreCase: string;
     readonly filesToIgnore: string;
 
-    run(cssFilePath: string): any[];
+    run(cssFilePath: string, searchOnly: string): any[];
     call(selector: string, path: string): any;
 }
 

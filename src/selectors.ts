@@ -1,6 +1,8 @@
 const fs = require("fs");
 const splitRetain = require("split-retain");
+
 import { IGrep } from "./interfaces/IGrep";
+import { Selector} from "./selector";
 
 class Selectors {
 
@@ -40,6 +42,7 @@ class Selectors {
             const elements: any[] = splitRetain(selector, /(\.|#|\s+)/g, { leadingSeparator: true });
             elements.forEach(element => {
                 if (this.selectorIsIdOrClass(element) && !allSelectors.includes(element)) {
+                    // let selector = new Selector(element)
                     allSelectors.push(element);
                 }
             });
