@@ -126,7 +126,6 @@ provider.forEach(provide => {
 
 });
 
-// Bug fix:
 // https://github.com/joereynolds/mort/issues/6
 test("It can handle unix and windows line endings", () => {
     const expected = [
@@ -142,7 +141,6 @@ test("It can handle unix and windows line endings", () => {
     expect(selectors.fromFile("test/bug-fixes/windows-line-endings.css")).toEqual(expected);
 });
 
-// Bug fix:
 // https://github.com/joereynolds/mort/issues/7
 test("it strips punctuation from the selector", () => {
     const input = ["#id-with-comma,", ".class-with-comma,"];
@@ -153,8 +151,6 @@ test("it strips punctuation from the selector", () => {
     expect(actual).toEqual(expected);
 });
 
-// TODO
-// Bug fix:
 // https://github.com/joereynolds/mort/issues/8
 test("it searches chained selectors separately", () => {
     const input = [
@@ -178,5 +174,20 @@ test("it searches chained selectors separately", () => {
     const selectors = new Selectors();
     const actual = selectors.getFrom(input);
 
+    expect(actual).toEqual(expected);
+});
+
+test("it returns the shell command as a string", () => {
+    const ripgrep = new RipGrep();
+    const selectors = new Selectors();
+    const expected = "rg -i test/fixtures/no-usages.css a-selector .";
+
+    const result = selectors.findUsages(
+        ripgrep,
+        "test/fixtures/no-usages.css",
+        ["#a-selector"],
+    );
+
+    const actual = result[0].commandUsed;
     expect(actual).toEqual(expected);
 });
