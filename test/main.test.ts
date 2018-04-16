@@ -180,7 +180,7 @@ test("it searches chained selectors separately", () => {
 test("it returns the shell command as a string", () => {
     const ripgrep = new RipGrep();
     const selectors = new Selectors();
-    const expected = "rg -i test/fixtures/no-usages.css a-selector .";
+    const expected = "rg -i --iglob=!*.{css,scss} #a-selector test/fixtures/no-usages.css";
 
     const result = selectors.findUsages(
         ripgrep,
