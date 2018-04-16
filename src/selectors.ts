@@ -6,9 +6,6 @@ import { Selector} from "./selector";
 
 class Selectors {
 
-    private readonly id: string = "#";
-    private readonly class: string = ".";
-
     public fromFile(file: string): string[] {
         const fileContents: string = fs.readFileSync(file, "utf8");
         const selectors = this.getFrom(fileContents.split(/(\r\n|\n)/g));
@@ -23,7 +20,8 @@ class Selectors {
      */
     public getFrom(selectors: string[]): string[] {
         const filtered: string[] = selectors.filter(selector => {
-            return (selector.startsWith(this.id) || selector.startsWith(this.class));
+            const selectorr = new Selector(selector);
+            return selectorr.isIdOrClass(selector);
         });
 
         const allSelectors: string[] = [];
@@ -41,7 +39,8 @@ class Selectors {
         filtered.forEach(selector => {
             const elements: any[] = splitRetain(selector, /(\.|#|\s+)/g, { leadingSeparator: true });
             elements.forEach(element => {
-                if (this.selectorIsIdOrClass(element) && !allSelectors.includes(element)) {
+                const selectorr = new Selector(element);
+                if (selectorr.isIdOrClass(element) && !allSelectors.includes(element)) {
                     // let selector = new Selector(element)
                     allSelectors.push(element);
                 }
@@ -93,10 +92,6 @@ class Selectors {
         });
 
         return foundSelectors;
-    }
-
-    private selectorIsIdOrClass(selector: string): boolean {
-        return (selector.startsWith(this.id) || selector.startsWith(this.class));
     }
 
     private removePseudoSelectors(selectors: string[]): string[] {
