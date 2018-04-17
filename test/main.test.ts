@@ -191,3 +191,19 @@ test("it returns the shell command as a string", () => {
     const actual = result[0].commandUsed;
     expect(actual).toEqual(expected);
 });
+
+// TODO
+// test("it finds selectors after HTML elements", () => {
+    // const input = ["tr #an-id"];
+    // const expected = ["#an-id"];
+    // const selectors = new Selectors();
+    // const actual = selectors.getFrom(input);
+
+    // expect(actual).toEqual(expected);
+// });
+
+// TODO
+// test("it displays the line number of the match in the output", () => {
+// });
+//
+

@@ -6,7 +6,7 @@ class GitGrep implements IGrep {
 
     public readonly executable: string = "git";
     public readonly ignoreCase: string = "-i";
-    public readonly filesToIgnore: string = "'.' ':!*.css' ':!.*scss";
+    public readonly filesToIgnore: string = "'.' ':!*.css' ':!.*scss'";
 
     public run(cssFilePath: string, searchOnly: string = "."): string[]  {
         const selectors = new Selectors();
@@ -19,7 +19,7 @@ class GitGrep implements IGrep {
         const call = child_process.spawnSync(
             this.executable,
             [
-                "grep", //subcommand
+                "grep", // subcommand
                 this.ignoreCase,
                 selector,
                 this.filesToIgnore,

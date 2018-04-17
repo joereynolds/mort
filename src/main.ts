@@ -16,15 +16,18 @@ program
     .version(version)
     .option("-u, --usage-count", "Show warnings for any css selector <= usage-count.")
     .option("-v, --verbose", "Detailed information about the matches will be displayed.", 0)
-    .option("-p, --program", "Force mort to use a grep program of your choice. " +
-                              "Supported ones are 'ripgrep' and 'gitgrep'")
+    .option("-f, --file <path>", "The css file to run mort against.")
+    .option("-p, --program <program>", "Force mort to use a grep program of your choice. " +
+                              "Supported ones are 'ripgrep' and 'gitgrep'.")
     .parse(process.argv);
 
-if (!program.args[0]) {
+if (!program.file) {
     console.log("Please supply a css file");
 } else {
 
     let grepProgram: IGrep;
+
+    // Infer the best grepProgram to use
     if (executable.isExecutable("rg")) {
         grepProgram = new RipGrep();
     } else if (executable.isExecutable("git")) {
@@ -34,9 +37,18 @@ if (!program.args[0]) {
         console.log("No compatible grep programs found. mort supports either ripgrep or git grep.");
     }
 
+    // Respect the user's program
+    if (program.program === "gitgrep") {
+        grepProgram = new GitGrep();
+    }
+
+    if (program.program === "ripgrep") {
+        grepProgram = new RipGrep();
+    }
+
     const usages = grepProgram.run(
-        program.args[0],
-        program.args[1],
+        program.file,
+        ".",
     );
 
     printer.printUsages(
