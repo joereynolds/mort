@@ -1,7 +1,7 @@
 import { GitGrep } from "../src/grep-programs/gitgrep";
 import { RipGrep } from "../src/grep-programs/ripgrep";
-import { Selectors } from "../src/selectors";
 import { Selector } from "../src/selector";
+import { Selectors } from "../src/selectors";
 const child_process = require("child_process");
 
 test("jest is running correctly", () => {
@@ -14,13 +14,11 @@ test("our grep program returns an object of results", () => {
 });
 
 test("it ignores pseudoselectors", () => {
-    const input = ["a-valid-id-with-pseudo:hover", "a-valid-id"];
-
-    const selectorOne = new Selector(input[0]);
-    const selectorTwo = new Selector(input[1]);
+    const selectorOne = new Selector("a-valid-id-with-pseudo:hover");
+    const selectorTwo = new Selector("a-valid-id");
     const selectors = new Selectors();
     const actual = selectors.clean([selectorOne, selectorTwo]);
-    expect(actual).toEqual(selectorTwo);
+    expect(actual).toEqual([selectorTwo]);
 });
 
 test("it strips out `#` and `.` from selectors", () => {
@@ -55,20 +53,22 @@ test("It strips out attribute selectors", () => {
     expect(selectorClass.cleanName).toEqual(expectedClass);
 });
 
-// test("it does not return duplicate elements", () => {
-//     const input = [
-//         "#a-test",
-//         "#a-test",
-//         "#a-test",
-//         ".some-class",
-//     ];
+test("it does not return duplicate elements", () => {
+    const input = [
+        "#a-test",
+        "#a-test",
+        "#a-test",
+        ".some-class",
+    ];
 
-//     const expected = ["#a-test", ".some-class"];
+    const expected = ["#a-test", ".some-class"];
 
-//     const selectors = new Selectors();
-//     const actual = selectors.getFrom(input);
-//     expect(actual).toEqual(expected);
-// });
+    const selectors = new Selectors();
+    const actual = selectors.getFrom(input).map(selector => {
+        return selector.rawName;
+    });
+    expect(actual).toEqual(expected);
+});
 
 test("it gets all selectors for a rule that are ids or classes", () => {
 
@@ -94,86 +94,86 @@ test("it gets all selectors for a rule that are ids or classes", () => {
     expect(actual.sort()).toEqual(expected);
 });
 
-// const provider = [
-//     {
-//         input: new Selector("a-valid-id"),
-//         expected: [
-//             {
-//                 selector: "a-valid-id",
-//                 usages: 2,
-//                 foundIn: [
-//                     "test/fixtures/identical-to-test.html",
-//                     "test/fixtures/test.html",
-//                 ],
-//             },
-//         ],
-//     },
-//     {
-//         input: new Selector("a-valid-class"),
-//         expected: [
-//             {
-//                 selector: new Selector("")
-//                     class: ".",
-//                         cleanName: "a-valid-class",
-//                         id: "#",
-//                         rawName: "a-valid-class",
-//                 },
+test("It reports findings for a used selector using ripgrep", () => {
+    const grepProgram = new RipGrep();
+    const selectors = new Selectors();
+    const expectedSelector = new Selector("#a-valid-id");
 
-//                 usages: 0,
-//                 foundIn: [],
-//             },
-//         ],
-//     },
-// ];
+    const expected = [{
+        foundIn: [
+           "test/fixtures/identical-to-test.html",
+           "test/fixtures/test.html",
+        ],
+        selector: expectedSelector,
+        usages: 2,
+    }];
 
-// provider.forEach(provide => {
-//     test(`it reports findings for selector: ${provide.input.cleanName} using ripgrep`, () => {
-//         const ripgrep = new RipGrep();
-//         const selectors = new Selectors();
-//         const actual = selectors.findUsages(
-//             ripgrep,
-//             "test/fixtures",
-//             [provide.input],
-//         );
+    const actual = selectors.findUsages(
+        grepProgram,
+        "test/fixtures",
+        [expectedSelector],
+    );
 
-//         // Remove commandUsed so it doesn't clog our test
-//         delete actual[0].commandUsed;
-//         expect(actual).toEqual(provide.expected);
-//     });
+    // Remove commandUsed so it doesn't clog our test
+    delete actual[0].commandUsed;
+    expect(actual).toEqual(expected);
+});
 
-// });
+test("It reports findings for a selector using gitgrep", () => {
+    const grepProgram = new GitGrep();
+    const selectors = new Selectors();
+    const expectedSelector = new Selector(".a-valid-class");
 
-// provider.forEach(provide => {
-//     test(`it reports findings for selector: ${provide.input.cleanName} using gitgrep`, () => {
-//         const gitgrep = new GitGrep();
-//         const selectors = new Selectors();
-//         const actual = selectors.findUsages(
-//             gitgrep,
-//             "test/fixtures",
-//             [provide.input],
-//         );
+    const expected = [{
+        // @ts-ignore
+        foundIn: [],
+        selector: expectedSelector,
+        usages: 0,
+    }];
 
-//         // Remove commandUsed so it doesn't clog our test
-//         delete actual[0].commandUsed;
-//         expect(actual).toEqual(provide.expected);
-//     });
+    const actual = selectors.findUsages(
+        grepProgram,
+        "test/fixtures",
+        [expectedSelector],
+    );
 
-// });
+    // Remove commandUsed so it doesn't clog our test
+    delete actual[0].commandUsed;
+    expect(actual).toEqual(expected);
+});
+
+test("It reports findings for a selector using ripgrep", () => {
+    const grepProgram = new RipGrep();
+    const selectors = new Selectors();
+    const expectedSelector = new Selector(".a-valid-class");
+
+    const expected = [{
+        // @ts-ignore
+        foundIn: [],
+        selector: expectedSelector,
+        usages: 0,
+    }];
+
+    const actual = selectors.findUsages(
+        grepProgram,
+        "test/fixtures",
+        [expectedSelector],
+    );
+
+    // Remove commandUsed so it doesn't clog our test
+    delete actual[0].commandUsed;
+    expect(actual).toEqual(expected);
+});
 
 // https://github.com/joereynolds/mort/issues/6
 test("It can handle unix and windows line endings", () => {
-
-    // TODO - regression added to port to selector class
-    // Need to remove duplicates again
     const expected = [
         ".active",
-        ".article",
         ".article",
         ".article-tag",
         ".hljs{",
         ".menu",
         ".song",
-        ".text",
         ".text",
     ];
     const selectors = new Selectors();
@@ -228,22 +228,21 @@ test("it searches chained selectors separately", () => {
     expect(actual.sort()).toEqual(expected);
 });
 
-// test("it returns the shell command as a string", () => {
-//     const ripgrep = new RipGrep();
-//     const selectors = new Selectors();
-//     const expected = "rg -i --iglob=!*.{css,scss} #a-selector test/fixtures/no-usages.css";
+test("it returns the shell command as a string", () => {
+    const ripgrep = new RipGrep();
+    const selectors = new Selectors();
+    const selector = new Selector("#a-selector");
+    const expected = "rg -i --iglob=!*.{css,scss} a-selector test/fixtures/no-usages.css";
 
-//     const selector = new Selector("#a-selector");
+    const result = selectors.findUsages(
+        ripgrep,
+        "test/fixtures/no-usages.css",
+        [selector],
+    );
 
-//     const result = selectors.findUsages(
-//         ripgrep,
-//         "test/fixtures/no-usages.css",
-//         [selector],
-//     );
-
-//     const actual = result[0].commandUsed;
-//     expect(actual).toEqual(expected);
-// });
+    const actual = result[0].commandUsed;
+    expect(actual).toEqual(expected);
+});
 
 // TODO
 // test("it finds selectors after HTML elements", () => {
@@ -259,4 +258,3 @@ test("it searches chained selectors separately", () => {
 // test("it displays the line number of the match in the output", () => {
 // });
 //
-

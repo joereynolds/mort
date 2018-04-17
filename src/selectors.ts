@@ -19,6 +19,10 @@ class Selectors {
      */
     public getFrom(selectors: string[]): Selector[] {
         const allSelectors: Selector[] = [];
+
+        // Use this to keep track of what we've added to avoid duplicates
+        // going in
+        const alreadyAddedSelectors: string[] = [];
         // Goes through every selector from a stylesheet and
         // makes sure that child selectors are also included
         // For example
@@ -36,7 +40,8 @@ class Selectors {
                 const elements: any[] = splitRetain(selector, /(\.|#|\s+)/g, { leadingSeparator: true });
                 elements.forEach(element => {
                     const splitSelector = new Selector(element);
-                    if (splitSelector.isIdOrClass() && !allSelectors.includes(element)) {
+                    if (splitSelector.isIdOrClass() && !alreadyAddedSelectors.includes(element)) {
+                        alreadyAddedSelectors.push(element);
                         allSelectors.push(splitSelector);
                     }
                 });
