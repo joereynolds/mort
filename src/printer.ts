@@ -1,5 +1,6 @@
 const chalk = require("chalk");
 
+import { Selector} from "./selector";
 class Printer {
 
     private readonly verboseMessage: string = "Running mort in verbose mode";
@@ -19,7 +20,7 @@ class Printer {
         selectors.forEach(selector => {
             if (selector.usages <= userDefinedUsageCount) {
                 console.log(
-                    `${selector.usages} usages found. ${chalk.green(selector.selector)} can probably be removed.`,
+                `${selector.usages} usages found. ${chalk.green(selector.selector.rawName)} can probably be removed.`,
                 );
             }
 

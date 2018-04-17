@@ -1,5 +1,6 @@
 const child_process = require("child_process");
 import { IGrep } from "../interfaces/IGrep";
+import { Selector } from "../selector";
 import { Selectors } from "../selectors";
 
 class Grep implements IGrep {
@@ -8,7 +9,7 @@ class Grep implements IGrep {
     public readonly ignoreCase: string = "-i";
     public readonly filesToIgnore: string = "--exclude=*.css";
 
-    public run(cssFilePath: string, searchOnly: string = "."): string[]  {
+    public run(cssFilePath: string, searchOnly: string = "."): Selector[]  {
         const selectors = new Selectors();
         const cleanSelectors = selectors.clean(selectors.fromFile(cssFilePath));
         return selectors.findUsages(this, searchOnly, cleanSelectors);
