@@ -23,6 +23,7 @@ class GitGrep implements IGrep {
                 this.ignoreCase,
                 selector,
                 this.filesToIgnore,
+                ":!*.scss", // put it in separately because it doesn't like spaces in the command, refactor this.
                 path,
             ],
             {
