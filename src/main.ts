@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { GitGrep } from "./grep-programs/gitgrep";
+import { Grep } from "./grep-programs/grep";
 import { RipGrep } from "./grep-programs/ripgrep";
 import { IGrep } from "./interfaces/IGrep";
 import { Printer } from "./printer";
@@ -44,6 +45,10 @@ if (!program.file) {
 
     if (program.program === "ripgrep") {
         grepProgram = new RipGrep();
+    }
+
+    if (program.program === "grep") {
+        grepProgram = new Grep();
     }
 
     const usages = grepProgram.run(
