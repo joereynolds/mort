@@ -1,4 +1,3 @@
-
 class Selector {
 
     public rawName: string;
@@ -20,8 +19,8 @@ class Selector {
         return this.rawName;
     }
 
-    public isIdOrClass(selector: string): boolean {
-        return (selector.startsWith(this.id) || selector.startsWith(this.class));
+    public isIdOrClass(): boolean {
+        return (this.rawName.startsWith(this.id) || this.rawName.startsWith(this.class));
     }
 }
 

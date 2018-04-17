@@ -9,7 +9,6 @@ class Selectors {
     public fromFile(file: string): Selector[] {
         const fileContents: string = fs.readFileSync(file, "utf8");
         const selectors = this.getFrom(fileContents.split(/(\r\n|\n)/g));
-
         return selectors;
     }
 
@@ -19,11 +18,6 @@ class Selectors {
      * are returned as a separate item.
      */
     public getFrom(selectors: string[]): Selector[] {
-        const filtered: string[] = selectors.filter(selector => {
-            const selectorr = new Selector(selector);
-            return selectorr.isIdOrClass(selector);
-        });
-
         const allSelectors: Selector[] = [];
         // Goes through every selector from a stylesheet and
         // makes sure that child selectors are also included
@@ -36,14 +30,17 @@ class Selectors {
         // ]
         //
         // We also only push an element once, no duplicates.
-        filtered.forEach(selector => {
-            const elements: any[] = splitRetain(selector, /(\.|#|\s+)/g, { leadingSeparator: true });
-            elements.forEach(element => {
-                const selectorr = new Selector(element);
-                if (selectorr.isIdOrClass(element) && !allSelectors.includes(element)) {
-                    allSelectors.push(selectorr);
-                }
-            });
+        selectors.forEach(selector => {
+            const selectorr = new Selector(selector);
+            if (selectorr.isIdOrClass()) {
+                const elements: any[] = splitRetain(selector, /(\.|#|\s+)/g, { leadingSeparator: true });
+                elements.forEach(element => {
+                    const splitSelector = new Selector(element);
+                    if (splitSelector.isIdOrClass() && !allSelectors.includes(element)) {
+                        allSelectors.push(splitSelector);
+                    }
+                });
+            }
         });
 
         return allSelectors.sort();

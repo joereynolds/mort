@@ -13,13 +13,15 @@ test("our grep program returns an object of results", () => {
     expect(typeof ripgrep.run("test/fixtures/test.css")).toEqual("object");
 });
 
-// test("it ignores pseudoselectors", () => {
-//     const expected = ["a-valid-id"];
-//     const input = ["a-valid-id-with-pseudo:hover", "a-valid-id"];
-//     const selectors = new Selectors();
-//     const actual = selectors.clean(input);
-//     expect(actual).toEqual(expected);
-// });
+test("it ignores pseudoselectors", () => {
+    const input = ["a-valid-id-with-pseudo:hover", "a-valid-id"];
+
+    const selectorOne = new Selector(input[0]);
+    const selectorTwo = new Selector(input[1]);
+    const selectors = new Selectors();
+    const actual = selectors.clean([selectorOne, selectorTwo]);
+    expect(actual).toEqual(selectorTwo);
+});
 
 test("it strips out `#` and `.` from selectors", () => {
     const expectedId = "a-valid-id";
@@ -53,22 +55,20 @@ test("It strips out attribute selectors", () => {
     expect(selectorClass.cleanName).toEqual(expectedClass);
 });
 
-test("it does not return duplicate elements", () => {
-    const input = [
-        "#a-test",
-        "#a-test",
-        "#a-test",
-        ".some-class",
-    ];
+// test("it does not return duplicate elements", () => {
+//     const input = [
+//         "#a-test",
+//         "#a-test",
+//         "#a-test",
+//         ".some-class",
+//     ];
 
-    const expected = ["#a-test", ".some-class"];
+//     const expected = ["#a-test", ".some-class"];
 
-    // TODO - regression
-    expect(1).toEqual(1);
-    // const selectors = new Selectors();
-    // const actual = selectors.getFrom(input);
-    // expect(actual).toEqual(expected);
-});
+//     const selectors = new Selectors();
+//     const actual = selectors.getFrom(input);
+//     expect(actual).toEqual(expected);
+// });
 
 test("it gets all selectors for a rule that are ids or classes", () => {
 
