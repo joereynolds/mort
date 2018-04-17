@@ -6,7 +6,7 @@ import { Selector} from "./selector";
 
 class Selectors {
 
-    public fromFile(file: string): string[] {
+    public fromFile(file: string): Selector[] {
         const fileContents: string = fs.readFileSync(file, "utf8");
         const selectors = this.getFrom(fileContents.split(/(\r\n|\n)/g));
 
@@ -18,13 +18,13 @@ class Selectors {
      * It only gets ids and classes and child selectors
      * are returned as a separate item.
      */
-    public getFrom(selectors: string[]): string[] {
+    public getFrom(selectors: string[]): Selector[] {
         const filtered: string[] = selectors.filter(selector => {
             const selectorr = new Selector(selector);
             return selectorr.isIdOrClass(selector);
         });
 
-        const allSelectors: string[] = [];
+        const allSelectors: Selector[] = [];
         // Goes through every selector from a stylesheet and
         // makes sure that child selectors are also included
         // For example
@@ -41,8 +41,7 @@ class Selectors {
             elements.forEach(element => {
                 const selectorr = new Selector(element);
                 if (selectorr.isIdOrClass(element) && !allSelectors.includes(element)) {
-                    // let selector = new Selector(element)
-                    allSelectors.push(element);
+                    allSelectors.push(selectorr);
                 }
             });
         });
@@ -50,10 +49,9 @@ class Selectors {
         return allSelectors.sort();
     }
 
-    public clean(selectors: string[]): string[] {
-        selectors = this.removeNoiseFromSelectors(selectors);
+    public clean(selectors: Selector[]): Selector[] {
         selectors = this.removePseudoSelectors(selectors);
-        return selectors.filter(selector => selector !== "");
+        return selectors.filter(selector => selector.rawName !== "");
     }
 
     /**
@@ -70,11 +68,11 @@ class Selectors {
      *     }
      * ]
      */
-    public findUsages(grepProgram: IGrep, path: string, selectors: string[]) {
+    public findUsages(grepProgram: IGrep, path: string, selectors: Selector[]) {
         const foundSelectors: any[] = [];
 
         selectors.forEach(selector => {
-            const call = grepProgram.call(selector, path);
+            const call = grepProgram.call(selector.cleanName, path);
             const listOfFiles: string[] = this.getFilesFromOutput(call.output[1]);
 
             let commandUsed = " ";
@@ -94,17 +92,9 @@ class Selectors {
         return foundSelectors;
     }
 
-    private removePseudoSelectors(selectors: string[]): string[] {
+    private removePseudoSelectors(selectors: Selector[]): Selector[] {
         const selectorMatch = /(:+.*)/g;
-        return selectors.filter(selector => !selector.match(selectorMatch));
-    }
-
-    private removeNoiseFromSelectors(selectors: string[]): string[] {
-        const cleanSelectors = selectors.map(selector => {
-            return selector.replace(/(#|\.|,|\s*\{|\[(\S*)\])/g, "");
-        });
-
-        return cleanSelectors;
+        return selectors.filter(selector => !selector.rawName.match(selectorMatch));
     }
 
     private getFilesFromOutput(output: string): string[] {
