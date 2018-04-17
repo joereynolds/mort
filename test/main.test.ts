@@ -1,3 +1,4 @@
+import { GitGrep } from "../src/grep-programs/gitgrep";
 import { RipGrep } from "../src/grep-programs/ripgrep";
 import { Selectors } from "../src/selectors";
 const child_process = require("child_process");
@@ -110,7 +111,7 @@ const provider = [
 ];
 
 provider.forEach(provide => {
-    test(`it reports findings for selector: ${provide.input}`, () => {
+    test(`it reports findings for selector: ${provide.input} using ripgrep`, () => {
         const ripgrep = new RipGrep();
         const selectors = new Selectors();
         const actual = selectors.findUsages(
@@ -119,7 +120,24 @@ provider.forEach(provide => {
             [provide.input],
         );
 
-        // TODO - Test that commandUsed is correct
+        // Remove commandUsed so it doesn't clog our test
+        delete actual[0].commandUsed;
+        expect(actual).toEqual(provide.expected);
+    });
+
+});
+
+provider.forEach(provide => {
+    test(`it reports findings for selector: ${provide.input} using gitgrep`, () => {
+        const gitgrep = new GitGrep();
+        const selectors = new Selectors();
+        const actual = selectors.findUsages(
+            gitgrep,
+            "test/fixtures",
+            [provide.input],
+        );
+
+        // Remove commandUsed so it doesn't clog our test
         delete actual[0].commandUsed;
         expect(actual).toEqual(provide.expected);
     });

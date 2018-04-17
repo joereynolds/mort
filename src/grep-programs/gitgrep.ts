@@ -6,9 +6,9 @@ class GitGrep implements IGrep {
 
     public readonly executable: string = "git";
     public readonly ignoreCase: string = "-i";
-    public readonly filesToIgnore: string = "'.' ':!*.css' ':!.*scss'";
+    public readonly filesToIgnore: string = ":!*.css";
 
-    public run(cssFilePath: string, searchOnly: string = "."): string[]  {
+    public run(cssFilePath: string, searchOnly: string = ""): string[]  {
         const selectors = new Selectors();
         const cleanSelectors = selectors.clean(selectors.fromFile(cssFilePath));
         return selectors.findUsages(this, searchOnly, cleanSelectors);
