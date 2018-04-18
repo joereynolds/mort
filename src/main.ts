@@ -19,7 +19,7 @@ program
     .option("-v, --verbose", "Detailed information about the matches will be displayed.", 0)
     .option("-f, --file <path>", "The css file to run mort against.")
     .option("-p, --program <program>", "Force mort to use a grep program of your choice. " +
-                              "Supported ones are 'ripgrep' and 'gitgrep'.")
+                              "Supported ones are 'ripgrep', 'gitgrep', and 'grep'.")
     .parse(process.argv);
 
 if (!program.file) {
@@ -35,7 +35,7 @@ if (!program.file) {
         console.log("Ripgrep 'rg' not found, falling back to using 'git grep'");
         grepProgram = new GitGrep();
     } else {
-        console.log("No compatible grep programs found. mort supports either ripgrep or git grep.");
+        console.log("No compatible grep programs found. mort supports either ripgrep, git grep, or grep.");
     }
 
     // Respect the user's program

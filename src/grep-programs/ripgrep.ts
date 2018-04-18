@@ -5,10 +5,6 @@ import { Selectors } from "../selectors";
 
 class RipGrep implements IGrep {
 
-    public readonly executable: string = "rg";
-    public readonly ignoreCase: string = "-i";
-    public readonly filesToIgnore: string = "--iglob=!*.{css,scss}";
-
     public run(cssFilePath: string, searchOnly: string = "."): Selector[]  {
         const selectors = new Selectors();
         const cleanSelectors = selectors.clean(selectors.fromFile(cssFilePath));
@@ -17,10 +13,10 @@ class RipGrep implements IGrep {
 
     public call(selector: string, path: string) {
         const call = child_process.spawnSync(
-            this.executable,
+            "rg",
             [
-                this.ignoreCase,
-                this.filesToIgnore,
+                "-i",
+                "--iglob=!*.{css,scss}",
                 selector,
                 path,
             ],
