@@ -15,8 +15,9 @@ class Selector {
         return name.replace(/(#|\.|,|\s*\{|\[(\S*)\])/g, "");
     }
 
-    public getRawName(): string {
-        return this.rawName;
+    public hasPseudoSelector(): boolean {
+        const pseudoSelectorMatch = /(:+.*)/g;
+        return Boolean(this.rawName.match(pseudoSelectorMatch));
     }
 
     public isIdOrClass(): boolean {

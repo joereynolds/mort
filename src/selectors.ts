@@ -40,7 +40,11 @@ class Selectors {
                 const elements: any[] = splitRetain(selector, /(\.|#|\s+)/g, { leadingSeparator: true });
                 elements.forEach(element => {
                     const splitSelector = new Selector(element);
-                    if (splitSelector.isIdOrClass() && !alreadyAddedSelectors.includes(element)) {
+                    if (splitSelector.isIdOrClass()
+                        && !splitSelector.hasPseudoSelector()
+                        && !alreadyAddedSelectors.includes(element)
+
+                    ) {
                         alreadyAddedSelectors.push(element);
                         allSelectors.push(splitSelector);
                     }
@@ -52,7 +56,6 @@ class Selectors {
     }
 
     public clean(selectors: Selector[]): Selector[] {
-        selectors = this.removePseudoSelectors(selectors);
         return selectors.filter(selector => selector.rawName !== "");
     }
 
@@ -92,11 +95,6 @@ class Selectors {
         });
 
         return foundSelectors;
-    }
-
-    private removePseudoSelectors(selectors: Selector[]): Selector[] {
-        const selectorMatch = /(:+.*)/g;
-        return selectors.filter(selector => !selector.rawName.match(selectorMatch));
     }
 
     private getFilesFromOutput(output: string): string[] {
