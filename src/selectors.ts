@@ -52,7 +52,11 @@ class Selectors {
             }
         });
 
-        return allSelectors.sort();
+        return allSelectors.sort((a, b) => {
+            return b.rawName < a.rawName ? 1
+                : b.rawName > a.rawName ? -1
+                : 0;
+        });
     }
 
     public clean(selectors: Selector[]): Selector[] {
