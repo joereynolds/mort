@@ -2,7 +2,7 @@
 
 Detects dead CSS.
 
-![A demonstration of Mort](https://i.imgur.com/KcHogZC.gif?1)
+![A demonstration of Mort](https://i.imgur.com/7qgUYpj.gif)
 
 # Installing
 
