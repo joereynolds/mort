@@ -3,12 +3,12 @@ const chalk = require("chalk");
 import { Selector} from "./selector";
 class Printer {
 
-    public verbose: boolean;
+    public verbose: number;
     public userDefinedUsageCount: number;
 
     private readonly verboseMessage: string = "Running mort in verbose mode";
 
-    constructor(verbose: boolean, userDefinedUsageCount: number) {
+    constructor(verbose: number, userDefinedUsageCount: number) {
         this.verbose = verbose;
         this.userDefinedUsageCount = userDefinedUsageCount;
 
@@ -22,6 +22,10 @@ class Printer {
      * this to typehint that
      */
     public printUsage(selector: any) {
+
+        if (this.verbose === 3) {
+            console.log(`Searching for ${chalk.green(selector.selector.rawName)}`);
+        }
 
         if (selector.usages <= this.userDefinedUsageCount) {
             console.log(
