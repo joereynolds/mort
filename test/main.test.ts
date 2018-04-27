@@ -266,3 +266,12 @@ test("it returns the shell command as a string", () => {
 // test("it displays the line number of the match in the output", () => {
 // });
 //
+//
+// TODO
+// test("It strips out all {'s and the content between them", () => {
+//     const actual = ".highlight { color: #009999; }";
+//     const expected = "highlight";
+
+//     const selector = new Selector(actual);
+//     expect(selector.cleanName).toEqual(expected);
+// });

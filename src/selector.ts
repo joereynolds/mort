@@ -12,7 +12,18 @@ class Selector {
     }
 
     public clean(name: string): string {
-        return name.replace(/(#|\.|,|\s*\{|\[(\S*)\])/g, "");
+        const re = new RegExp(
+          "("
+            + "#"                // Remove #'s
+            + "|\\."             // Remove .'s
+            + "|,"               // Remove ,'s
+            + "|\\s*\\{"         // Remove all spaces and {'s
+            + "|\\[(\\S*)\\]" +  // remove [ and ] and everything inside []
+          ")",
+          "g",
+        );
+
+        return name.replace(re, "");
     }
 
     public hasPseudoSelector(): boolean {
