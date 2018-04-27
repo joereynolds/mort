@@ -12,10 +12,14 @@ const program = require("commander");
 const executable = new Program();
 const version = "0.1.2";
 
+function increaseVerbosity(v: any, total: any) {
+    return total + 1;
+}
+
 program
     .version(version)
     .option("-u, --usage-count", "Show warnings for any css selector <= usage-count.")
-    .option("-v, --verbose", "Detailed information about the matches will be displayed.", 0)
+    .option("-v, --verbose", "Detailed information about the matches will be displayed.", increaseVerbosity, 0)
     .option("-f, --file <path>", "The css file to run mort against.")
     .option("-p, --program <program>", "Force mort to use a grep program of your choice. " +
                               "Supported ones are 'ripgrep', 'gitgrep', and 'grep'.")
