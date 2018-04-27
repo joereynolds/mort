@@ -13,7 +13,7 @@ class Printer {
         this.userDefinedUsageCount = userDefinedUsageCount;
 
         if (this.verbose) {
-            console.log(chalk.yellow(this.verboseMessage));
+            console.log(chalk.yellow(this.verboseMessage + ` [Verbosity: ${this.verbose}]`));
         }
     }
     /**
