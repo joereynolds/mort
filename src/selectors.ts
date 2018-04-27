@@ -2,6 +2,7 @@ const fs = require("fs");
 const splitRetain = require("split-retain");
 
 import { IGrep } from "./interfaces/IGrep";
+import { Printer } from "./printer";
 import { Selector} from "./selector";
 
 class Selectors {
@@ -77,7 +78,7 @@ class Selectors {
      *     }
      * ]
      */
-    public findUsages(grepProgram: IGrep, path: string, selectors: Selector[]) {
+    public findUsages(grepProgram: IGrep, path: string, selectors: Selector[], printer: any = null) {
         const foundSelectors: any[] = [];
 
         selectors.forEach(selector => {
@@ -96,6 +97,15 @@ class Selectors {
                 foundIn: listOfFiles.sort(),
                 commandUsed,
             });
+
+            if (printer !== null) {
+                printer.printUsage({
+                    selector,
+                    usages: listOfFiles.length,
+                    foundIn: listOfFiles.sort(),
+                    commandUsed,
+                }, 0, false);
+            }
         });
 
         return foundSelectors;

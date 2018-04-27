@@ -5,10 +5,10 @@ import { Selectors } from "../selectors";
 
 class RipGrep implements IGrep {
 
-    public run(cssFilePath: string, searchOnly: string = "."): Selector[]  {
+    public run(cssFilePath: string, searchOnly: string = ".", printer: any = null): Selector[]  {
         const selectors = new Selectors();
         const cleanSelectors = selectors.clean(selectors.fromFile(cssFilePath));
-        return selectors.findUsages(this, searchOnly, cleanSelectors);
+        return selectors.findUsages(this, searchOnly, cleanSelectors, printer);
     }
 
     public call(selector: string, path: string) {

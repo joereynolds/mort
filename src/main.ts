@@ -10,7 +10,6 @@ import { Program } from "./program";
 const program = require("commander");
 
 const executable = new Program();
-const printer = new Printer();
 const version = "0.1.2";
 
 program
@@ -25,6 +24,7 @@ program
 if (!program.file) {
     console.log("Please supply a css file");
 } else {
+    const printer = new Printer(program.verbose, 0);
 
     let grepProgram: IGrep;
 
@@ -51,14 +51,9 @@ if (!program.file) {
         grepProgram = new Grep();
     }
 
-    const usages = grepProgram.run(
+    grepProgram.run(
         program.file,
         ".",
-    );
-
-    printer.printUsages(
-        usages,
-        0,
-        program.verbose,
+        printer,
     );
 }
