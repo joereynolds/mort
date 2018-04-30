@@ -257,7 +257,7 @@ test("it returns the shell command as a string", () => {
 // TODO, move this to an integration dir
 test("it warns us if no file has been passed", done => {
     shelltest()
-        .cmd("mort")
+        .cmd("./dist/src/main.js")
     .expect("stdout", "Please supply a css file\n")
     .end(done);
 });
