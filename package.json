@@ -16,6 +16,7 @@
         "@types/node": "^9.6.2",
         "chalk": "^2.4.0",
         "commander": "^2.15.1",
+        "shelltest": "^2.0.0",
         "split-retain": "^1.0.1",
         "typescript": "^2.8.1"
     },

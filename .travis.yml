@@ -6,12 +6,5 @@ node_js:
 before_script:
     - curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.8.1/ripgrep_0.8.1_amd64.deb && sudo dpkg -i ripgrep_0.8.1_amd64.deb
 
-    - wget -O shelltest https://github.com/liquidz/shelltest/releases/download/v0.1.1/shelltest_linux_amd64
-    - chmod a+x ./shelltest
-
 install:
     - npm install
-
-script:
-    - npm test
-    - npm run build && ./shelltest -d ./test/integration/*.shelltest
