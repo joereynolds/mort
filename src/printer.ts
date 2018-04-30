@@ -5,15 +5,18 @@ class Printer {
 
     public verbose: number;
     public userDefinedUsageCount: number;
+    public file: string;
 
     private readonly verboseMessage: string = "Running mort in verbose mode";
 
-    constructor(verbose: number, userDefinedUsageCount: number) {
+    constructor(verbose: number, userDefinedUsageCount: number, file: string) {
         this.verbose = verbose;
         this.userDefinedUsageCount = userDefinedUsageCount;
+        this.file = file;
 
         if (this.verbose) {
             console.log(chalk.yellow(this.verboseMessage + ` [Verbosity: ${this.verbose}]`));
+            console.log(chalk.yellow(`Scanning ${this.file} ...`));
         }
     }
     /**

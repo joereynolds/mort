@@ -28,27 +28,13 @@ program
 if (!program.file) {
     console.log("Please supply a css file");
 } else {
-    const printer = new Printer(program.verbose, 0);
+    const printer = new Printer(program.verbose, 0, program.file);
 
-    let grepProgram: IGrep;
-
-    // Infer the best grepProgram to use
-    if (executable.isExecutable("rg")) {
-        grepProgram = new RipGrep();
-    } else if (executable.isExecutable("git")) {
-        console.log("Ripgrep 'rg' not found, falling back to using 'git grep'");
-        grepProgram = new GitGrep();
-    } else {
-        console.log("No compatible grep programs found. mort supports either ripgrep, git grep, or grep.");
-    }
+    let grepProgram = new RipGrep();
 
     // Respect the user's program
     if (program.program === "gitgrep") {
         grepProgram = new GitGrep();
-    }
-
-    if (program.program === "ripgrep") {
-        grepProgram = new RipGrep();
     }
 
     if (program.program === "grep") {
