@@ -1,2 +1,2 @@
-bash$ cd ../../ && mort
+bash$ cd ../../ && dist/src/main.js
 Please supply a css fild
