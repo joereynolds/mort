@@ -1,2 +1,2 @@
-bash$ cd ../../ && ./dist/src/main.js
+bash$ ./dist/src/main.js
 Please supply a css fild
