@@ -14,4 +14,4 @@ install:
 
 script:
     - npm test
-    - cd test/integration && ./shelltest -d ./*.shelltest
+    - cd test/integration && ./../../shelltest -d ./*.shelltest
