@@ -13,6 +13,4 @@ install:
     - npm install
 
 script:
-    - ./shelltest ./test/integration/*.shelltest && npm test
-
-
+    - ./shelltest ./test/integration/*.shelltest
