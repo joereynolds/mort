@@ -38,7 +38,7 @@ class Selectors {
         selectors.forEach(selector => {
             const selectorr = new Selector(selector);
             if (selectorr.isIdOrClass()) {
-                const elements: any[] = splitRetain(selector, /(\.|#|>|\s+)/g, { leadingSeparator: true });
+                const elements: string[] = splitRetain(selector, /(\.|#|>|\s+)/g, { leadingSeparator: true });
                 elements.forEach(element => {
                     const splitSelector = new Selector(element);
                     if (splitSelector.isIdOrClass()
@@ -78,7 +78,7 @@ class Selectors {
      *     }
      * ]
      */
-    public findUsages(grepProgram: IGrep, path: string, selectors: Selector[], printer: any = null) {
+    public findUsages(grepProgram: IGrep, path: string, selectors: Selector[], printer: Printer | null = null) {
         const foundSelectors: any[] = [];
 
         selectors.forEach(selector => {
@@ -104,7 +104,7 @@ class Selectors {
                     usages: listOfFiles.length,
                     foundIn: listOfFiles.sort(),
                     commandUsed,
-                }, 0, false);
+                });
             }
         });
 

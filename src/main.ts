@@ -32,7 +32,6 @@ if (!program.file) {
 
     let grepProgram = new RipGrep();
 
-    // Respect the user's program
     if (program.program === "gitgrep") {
         grepProgram = new GitGrep();
     }
