@@ -4,7 +4,6 @@ import { Selector } from "../src/selector";
 import { Selectors } from "../src/selectors";
 
 const child_process = require("child_process");
-const shelltest = require("shelltest");
 
 test("jest is running correctly", () => {
   expect(2).toBe(2);
@@ -253,15 +252,6 @@ test("it returns the shell command as a string", () => {
     const actual = result[0].commandUsed;
     expect(actual).toEqual(expected);
 });
-
-// TODO, move this to an integration dir
-test("it warns us if no file has been passed", done => {
-    shelltest()
-        .cmd("./dist/src/main.js")
-    .expect("stdout", "Please supply a css file\n")
-    .end(done);
-});
-
 // TODO
 // test("it finds selectors after HTML elements", () => {
     // const input = ["tr #an-id"];
