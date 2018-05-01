@@ -252,6 +252,26 @@ test("it returns the shell command as a string", () => {
     const actual = result[0].commandUsed;
     expect(actual).toEqual(expected);
 });
+
+test("it correctly splits on >", () => {
+    const input = [
+        ".btn-group>",
+        ".multiselect-container>li",
+        ".multiselect-container>li>a",
+        ".multiselect-container>li>a>label",
+    ];
+
+    const expected = [
+        ".btn-group",
+        ".multiselect-container",
+    ];
+
+    const selectors = new Selectors();
+    const actual = selectors.getFrom(input).map(selector => {
+        return selector.rawName;
+    });
+    expect(actual.sort()).toEqual(expected);
+});
 // TODO
 // test("it finds selectors after HTML elements", () => {
     // const input = ["tr #an-id"];

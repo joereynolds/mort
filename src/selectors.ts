@@ -38,7 +38,7 @@ class Selectors {
         selectors.forEach(selector => {
             const selectorr = new Selector(selector);
             if (selectorr.isIdOrClass()) {
-                const elements: any[] = splitRetain(selector, /(\.|#|\s+)/g, { leadingSeparator: true });
+                const elements: any[] = splitRetain(selector, /(\.|#|>|\s+)/g, { leadingSeparator: true });
                 elements.forEach(element => {
                     const splitSelector = new Selector(element);
                     if (splitSelector.isIdOrClass()
