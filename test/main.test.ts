@@ -188,7 +188,7 @@ test("It can handle unix and windows line endings", () => {
     ];
     const selectors = new Selectors();
 
-    const actual = selectors.fromFile("test/bug-fixes/windows-line-endings.css").map(selector => {
+    const actual = selectors.fromFile("test/fixtures/windows-line-endings.css").map(selector => {
         return selector.rawName;
     });
 
