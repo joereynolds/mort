@@ -2,6 +2,9 @@
 
 Detects dead CSS.
 
+![Build Status](https://travis-ci.org/joereynolds/mort.svg?branch=master)
+
+
 ![A demonstration of Mort](https://i.imgur.com/7qgUYpj.gif)
 
 # Installing
