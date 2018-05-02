@@ -18,7 +18,7 @@ function increaseVerbosity(v: any, total: any) {
 
 program
     .version(version)
-    .option("-u, --usage-count", "Show warnings for any css selector <= usage-count.")
+    .option("-u, --usage-count <number>", "Show warnings for any css selector <= usage-count.", 0)
     .option("-v, --verbose", "Detailed information about the matches will be displayed.", increaseVerbosity, 0)
     .option("-f, --file <path>", "The css file to run mort against.")
     .option("-p, --program <program>", "Force mort to use a grep program of your choice. " +
@@ -28,8 +28,7 @@ program
 if (!program.file) {
     console.log("Please supply a css file");
 } else {
-    const printer = new Printer(program.verbose, 0, program.file);
-
+    const printer = new Printer(program.verbose, program.usageCount, program.file);
     let grepProgram = new RipGrep();
 
     if (program.program === "gitgrep") {
