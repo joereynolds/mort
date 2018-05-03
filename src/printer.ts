@@ -36,7 +36,7 @@ class Printer {
             );
 
             if (this.verbose) {
-                if (!selector.foundIn.length) {
+                if (selector.foundIn.length <= this.userDefinedUsageCount) {
                     console.log(`Command used was: ${chalk.yellow(selector.commandUsed)}\n`);
                 }
             }
