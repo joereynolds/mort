@@ -1,6 +1,6 @@
 {
     "name": "mort-css",
-    "version": "0.1.2",
+    "version": "0.1.4",
     "scripts": {
         "build": "tsc",
         "lint": "tslint -c tslint.json -p tsconfig.json",

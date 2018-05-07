@@ -10,7 +10,7 @@ import { Program } from "./program";
 const program = require("commander");
 
 const executable = new Program();
-const version = "0.1.2";
+const version = "0.1.4";
 
 function increaseVerbosity(v: any, total: any) {
     return total + 1;
