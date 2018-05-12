@@ -8,7 +8,7 @@ const printer_1 = require("./printer");
 const program_1 = require("./program");
 const program = require("commander");
 const executable = new program_1.Program();
-const version = "0.1.7";
+const version = "1.0.0";
 function increaseVerbosity(v, total) {
     return total + 1;
 }

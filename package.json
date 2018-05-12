@@ -1,6 +1,10 @@
 {
     "name": "mort-css",
-    "version": "0.1.7",
+    "homepage": "https://github.com/joereynolds/mort",
+    "license": "MIT",
+    "description": "Dead CSS detection",
+    "keywords": ["dead", "css", "refactoring", "refactoring-tools", "ui", "frontend"],
+    "version": "1.0.0",
     "scripts": {
         "build": "tsc",
         "lint": "tslint -c tslint.json -p tsconfig.json",
