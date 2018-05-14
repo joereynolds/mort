@@ -7,8 +7,9 @@ const ripgrep_1 = require("./grep-programs/ripgrep");
 const printer_1 = require("./printer");
 const program_1 = require("./program");
 const program = require("commander");
+const commandExists = require("command-exists").sync;
 const executable = new program_1.Program();
-const version = "1.0.0";
+const version = "1.1.0";
 function increaseVerbosity(v, total) {
     return total + 1;
 }
@@ -26,6 +27,14 @@ if (!program.file) {
 else {
     const printer = new printer_1.Printer(program.verbose, program.usageCount, program.file);
     let grepProgram = new ripgrep_1.RipGrep();
+    if (!commandExists("rg")) {
+        printer.warnAboutNoRipgrep();
+        grepProgram = new gitgrep_1.GitGrep();
+    }
+    if (!commandExists("rg") && !commandExists("git")) {
+        printer.warnAboutNoRipgrepAndNoGitgrep();
+        grepProgram = new grep_1.Grep();
+    }
     if (program.program === "gitgrep") {
         grepProgram = new gitgrep_1.GitGrep();
     }

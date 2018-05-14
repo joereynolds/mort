@@ -8,9 +8,10 @@ import { Printer } from "./printer";
 import { Program } from "./program";
 
 const program = require("commander");
+const commandExists = require("command-exists").sync;
 
 const executable = new Program();
-const version = "1.0.0";
+const version = "1.1.0";
 
 function increaseVerbosity(v: any, total: any) {
     return total + 1;
@@ -29,7 +30,18 @@ if (!program.file) {
     console.log("Please supply a css file");
 } else {
     const printer = new Printer(program.verbose, program.usageCount, program.file);
+
     let grepProgram = new RipGrep();
+
+    if (!commandExists("rg")) {
+        printer.warnAboutNoRipgrep();
+        grepProgram = new GitGrep();
+    }
+
+    if (!commandExists("rg") && !commandExists("git")) {
+        printer.warnAboutNoRipgrepAndNoGitgrep();
+        grepProgram = new Grep();
+    }
 
     if (program.program === "gitgrep") {
         grepProgram = new GitGrep();

@@ -30,6 +30,12 @@ class Printer {
             }
         }
     }
+    warnAboutNoRipgrep() {
+        console.log(chalk.red("rg (ripgrep) not found, falling back to 'git grep'"));
+    }
+    warnAboutNoRipgrepAndNoGitgrep() {
+        console.log(chalk.red("rg (ripgrep) not found, git grep not found, falling back to 'grep'"));
+    }
 }
 exports.Printer = Printer;
 //# sourceMappingURL=printer.js.map

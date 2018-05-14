@@ -42,6 +42,14 @@ class Printer {
             }
         }
     }
+
+    public warnAboutNoRipgrep() {
+        console.log(chalk.red("rg (ripgrep) not found, falling back to 'git grep'"));
+    }
+
+    public warnAboutNoRipgrepAndNoGitgrep() {
+        console.log(chalk.red("rg (ripgrep) not found, git grep not found, falling back to 'grep'"));
+    }
 }
 
 export { Printer };
