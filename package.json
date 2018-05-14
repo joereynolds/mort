@@ -3,7 +3,14 @@
     "homepage": "https://github.com/joereynolds/mort",
     "license": "MIT",
     "description": "Dead CSS detection",
-    "keywords": ["dead", "css", "refactoring", "refactoring-tools", "ui", "frontend"],
+    "keywords": [
+        "dead",
+        "css",
+        "refactoring",
+        "refactoring-tools",
+        "ui",
+        "frontend"
+    ],
     "version": "1.0.0",
     "scripts": {
         "build": "tsc",
@@ -19,6 +26,7 @@
     "dependencies": {
         "@types/node": "^9.6.2",
         "chalk": "^2.4.0",
+        "command-exists": "^1.2.6",
         "commander": "^2.15.1",
         "shelltest": "^2.0.0",
         "split-retain": "^1.0.1",
