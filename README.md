@@ -77,19 +77,19 @@ There are currently 3 levels of verbosity.
 
 `mort -f somefile.css -v`
 
-Level 1 displays what file it is scanning, and the grep command that was used to find that selector.
+Level 1 displays what file it is scanning and the line count for that selector.
 
 **Level 2**
 
 `mort -f somefile.css -vv`
 
-Unused but reserved for the future.
+Level 2 displays level 1 + The command used to find the selector
 
 **Level 3**
 
 `mort -f somefile.css -vvv`
 
-The same as 1 & 2 but also shows all selectors it is searching through (regardless of whether they are used or not).
+Level 3 displays level 1 + level 2 and shows all selectors it is searching through (regardless of whether they are used or not).
 
 ### -f --file
 

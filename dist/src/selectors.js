@@ -30,8 +30,9 @@ class Selectors {
         // ]
         //
         // We also only push an element once, no duplicates.
-        selectors.forEach(selector => {
+        selectors.forEach((selector, index) => {
             const selectorr = new selector_1.Selector(selector);
+            const l = index;
             if (selectorr.isIdOrClass()) {
                 const elements = splitRetain(selector, /(\.|#|>|\s+)/g, { leadingSeparator: true });
                 elements.forEach(element => {
@@ -39,6 +40,8 @@ class Selectors {
                     if (splitSelector.isIdOrClass()
                         && !splitSelector.hasPseudoSelector()
                         && !alreadyAddedSelectors.includes(element)) {
+                        // @ts-ignore
+                        splitSelector.setLineCount(this.getLineCountForSelector(selectors, index));
                         alreadyAddedSelectors.push(element);
                         allSelectors.push(splitSelector);
                     }
@@ -100,6 +103,19 @@ class Selectors {
             matches.push(fileMatch.split(":")[0]);
         });
         return matches.filter(match => match !== "");
+    }
+    getLineCountForSelector(selectors, index) {
+        // Get and set the line count: go from the index of the current selector
+        // in the array until we see a }
+        for (let i = index; i < selectors.length; i++) {
+            if (selectors[i].includes("}")) {
+                // We have two divide by 2 because for some reason
+                // The file is twice the line count of the original
+                // file, TODO - Fix this.
+                const lineCount = Math.floor((i - index) / 2);
+                return lineCount;
+            }
+        }
     }
 }
 exports.Selectors = Selectors;

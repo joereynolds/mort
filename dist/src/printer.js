@@ -18,12 +18,18 @@ class Printer {
      * this to typehint that
      */
     printUsage(selector) {
+        const rawName = chalk.green(selector.selector.rawName);
+        let usagesMessage = `${selector.usages} usages found. ${rawName} can probably be removed.`;
+        if (this.verbose >= 1) {
+            const lineCount = chalk.yellow(`(${selector.selector.lineCount} lines)`);
+            usagesMessage = `${selector.usages} usages found. ${rawName} ${lineCount} can probably be removed.`;
+        }
         if (this.verbose === 3) {
             console.log(`Searching for ${chalk.green(selector.selector.rawName)}`);
         }
         if (selector.usages <= this.userDefinedUsageCount) {
-            console.log(`${selector.usages} usages found. ${chalk.green(selector.selector.rawName)} can probably be removed.`);
-            if (this.verbose) {
+            console.log(usagesMessage);
+            if (this.verbose >= 2) {
                 if (selector.foundIn.length <= this.userDefinedUsageCount) {
                     console.log(`Command used was: ${chalk.yellow(selector.commandUsed)}\n`);
                 }

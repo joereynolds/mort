@@ -12,3 +12,9 @@ Steps for making a release are:
 ```
 git tag -a vx.x.x some_commit_id
 ```
+
+Once all that's done, remember to push it to npm
+
+```
+npm publish
+```

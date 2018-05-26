@@ -6,6 +6,7 @@ class Selector {
         this.class = ".";
         this.rawName = rawName;
         this.cleanName = this.clean(rawName);
+        this.lineCount = 0;
     }
     clean(name) {
         const re = new RegExp("("
@@ -23,6 +24,14 @@ class Selector {
     }
     isIdOrClass() {
         return (this.rawName.startsWith(this.id) || this.rawName.startsWith(this.class));
+    }
+    /**
+     * Set the highest count found for a selector
+     */
+    setLineCount(lineCount) {
+        if (lineCount > this.lineCount) {
+            this.lineCount = lineCount;
+        }
     }
 }
 exports.Selector = Selector;
