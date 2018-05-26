@@ -21,26 +21,24 @@ program
     .option("-p, --program <program>", "Force mort to use a grep program of your choice. " +
     "Supported ones are 'ripgrep', 'gitgrep', and 'grep'.")
     .parse(process.argv);
+const printer = new printer_1.Printer(program.verbose, program.usageCount, program.file);
+let grepProgram = new ripgrep_1.RipGrep();
+if (!commandExists("rg")) {
+    printer.warnAboutNoRipgrep();
+    grepProgram = new gitgrep_1.GitGrep();
+}
+if (!commandExists("rg") && !commandExists("git")) {
+    printer.warnAboutNoRipgrepAndNoGitgrep();
+    grepProgram = new grep_1.Grep();
+}
+if (program.program === "gitgrep") {
+    grepProgram = new gitgrep_1.GitGrep();
+}
+if (program.program === "grep") {
+    grepProgram = new grep_1.Grep();
+}
 if (!program.file) {
-    console.log("Please supply a css file");
+    program.file = 0; // If there's no file, pass stdin through instead
 }
-else {
-    const printer = new printer_1.Printer(program.verbose, program.usageCount, program.file);
-    let grepProgram = new ripgrep_1.RipGrep();
-    if (!commandExists("rg")) {
-        printer.warnAboutNoRipgrep();
-        grepProgram = new gitgrep_1.GitGrep();
-    }
-    if (!commandExists("rg") && !commandExists("git")) {
-        printer.warnAboutNoRipgrepAndNoGitgrep();
-        grepProgram = new grep_1.Grep();
-    }
-    if (program.program === "gitgrep") {
-        grepProgram = new gitgrep_1.GitGrep();
-    }
-    if (program.program === "grep") {
-        grepProgram = new grep_1.Grep();
-    }
-    grepProgram.run(program.file, ".", printer);
-}
+grepProgram.run(program.file, ".", printer);
 //# sourceMappingURL=main.js.map

@@ -26,34 +26,34 @@ program
                               "Supported ones are 'ripgrep', 'gitgrep', and 'grep'.")
     .parse(process.argv);
 
-if (!program.file) {
-    console.log("Please supply a css file");
-} else {
-    const printer = new Printer(program.verbose, program.usageCount, program.file);
+const printer = new Printer(program.verbose, program.usageCount, program.file);
 
-    let grepProgram = new RipGrep();
+let grepProgram = new RipGrep();
 
-    if (!commandExists("rg")) {
-        printer.warnAboutNoRipgrep();
-        grepProgram = new GitGrep();
-    }
-
-    if (!commandExists("rg") && !commandExists("git")) {
-        printer.warnAboutNoRipgrepAndNoGitgrep();
-        grepProgram = new Grep();
-    }
-
-    if (program.program === "gitgrep") {
-        grepProgram = new GitGrep();
-    }
-
-    if (program.program === "grep") {
-        grepProgram = new Grep();
-    }
-
-    grepProgram.run(
-        program.file,
-        ".",
-        printer,
-    );
+if (!commandExists("rg")) {
+    printer.warnAboutNoRipgrep();
+    grepProgram = new GitGrep();
 }
+
+if (!commandExists("rg") && !commandExists("git")) {
+    printer.warnAboutNoRipgrepAndNoGitgrep();
+    grepProgram = new Grep();
+}
+
+if (program.program === "gitgrep") {
+    grepProgram = new GitGrep();
+}
+
+if (program.program === "grep") {
+    grepProgram = new Grep();
+}
+
+if (!program.file) {
+    program.file = 0; // If there's no file, pass stdin through instead
+}
+
+grepProgram.run(
+    program.file,
+    ".",
+    printer,
+);

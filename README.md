@@ -40,6 +40,20 @@ mort -f your-css-file.css -v
 mort -f your-css-file.css -p gitgrep
 ```
 
+**Stdin**
+
+If no arguments are supplied, `mort` reads from stdin.
+
+i.e.
+
+```
+cat my-css-file.css | mort
+```
+or
+```
+echo "#my-selector-to-hunt-for" | mort
+```
+
 ## Options
 
 ```
