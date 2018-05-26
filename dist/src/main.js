@@ -9,7 +9,7 @@ const program_1 = require("./program");
 const program = require("commander");
 const commandExists = require("command-exists").sync;
 const executable = new program_1.Program();
-const version = "1.1.0";
+const version = "1.2.1";
 function increaseVerbosity(v, total) {
     return total + 1;
 }
