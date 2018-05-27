@@ -21,6 +21,12 @@ test("it displays line count if verbose is 1 or higher", done => {
         .expect("stdout", /\(.\slines\)/)
         .end(done);
 });
+test("it warns if it can't find a file", done => {
+    shelltest()
+        .cmd(`${mort} -f non-existent-file-here`)
+        .expect("stdout", /Failed to open non-existent-file-here. Does it exist?/)
+        .end(done);
+});
 test("it finds selectors with ripgrep", done => {
     shelltest()
         .cmd(`${mort} -vv -f ./test/fixtures/no-usages.css -p ripgrep`)

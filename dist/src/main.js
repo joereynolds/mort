@@ -6,8 +6,10 @@ const grep_1 = require("./grep-programs/grep");
 const ripgrep_1 = require("./grep-programs/ripgrep");
 const printer_1 = require("./printer");
 const program_1 = require("./program");
+const fs = require("fs");
 const program = require("commander");
 const commandExists = require("command-exists").sync;
+const process = require("process");
 const executable = new program_1.Program();
 const version = "1.3.0";
 function increaseVerbosity(v, total) {
@@ -39,6 +41,10 @@ if (program.program === "grep") {
 }
 if (!program.file) {
     program.file = 0; // If there's no file, pass stdin through instead
+}
+if (!fs.existsSync(program.file) && program.file !== 0) {
+    printer.warnAboutFileNotFound(program.file);
+    process.exit(0);
 }
 grepProgram.run(program.file, ".", printer);
 //# sourceMappingURL=main.js.map

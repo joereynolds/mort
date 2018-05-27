@@ -7,8 +7,10 @@ import { IGrep } from "./interfaces/IGrep";
 import { Printer } from "./printer";
 import { Program } from "./program";
 
+const fs = require("fs");
 const program = require("commander");
 const commandExists = require("command-exists").sync;
+const process = require("process");
 
 const executable = new Program();
 const version = "1.3.0";
@@ -50,6 +52,11 @@ if (program.program === "grep") {
 
 if (!program.file) {
     program.file = 0; // If there's no file, pass stdin through instead
+}
+
+if (!fs.existsSync(program.file) && program.file !== 0) {
+    printer.warnAboutFileNotFound(program.file);
+    process.exit(0);
 }
 
 grepProgram.run(

@@ -36,11 +36,17 @@ class Printer {
             }
         }
     }
+    warnAboutFileNotFound(file) {
+        this.warn(`Failed to open ${file}. Does it exist?`);
+    }
     warnAboutNoRipgrep() {
-        console.log(chalk.red("rg (ripgrep) not found, falling back to 'git grep'"));
+        this.warn("rg (ripgrep) not found, falling back to 'git grep'");
     }
     warnAboutNoRipgrepAndNoGitgrep() {
-        console.log(chalk.red("rg (ripgrep) not found, git grep not found, falling back to 'grep'"));
+        this.warn("rg (ripgrep) not found, git grep not found, falling back to 'grep'");
+    }
+    warn(message) {
+        console.log(chalk.red(message));
     }
 }
 exports.Printer = Printer;
