@@ -5,9 +5,6 @@ const ripgrep_1 = require("../src/grep-programs/ripgrep");
 const selector_1 = require("../src/selector");
 const selectors_1 = require("../src/selectors");
 const child_process = require("child_process");
-test("jest is running correctly", () => {
-    expect(2).toBe(2);
-});
 test("our grep program returns an object of results", () => {
     const ripgrep = new ripgrep_1.RipGrep();
     expect(typeof ripgrep.run("test/fixtures/test.css")).toEqual("object");
@@ -26,14 +23,6 @@ test("our grep program returns an object of results", () => {
 //     );
 //     expect(actual).toEqual(1);
 // });
-test("it strips out `#` and `.` from selectors", () => {
-    const expectedId = "a-valid-id";
-    const expectedClass = "a-valid-class";
-    const selectorId = new selector_1.Selector("#a-valid-id");
-    expect(selectorId.cleanName).toEqual(expectedId);
-    const selectorClass = new selector_1.Selector(".a-valid-class");
-    expect(selectorClass.cleanName).toEqual(expectedClass);
-});
 test("it only gets ids and classes", () => {
     const expected = ["#a-valid-id", ".a-valid-class"];
     const selectors = new selectors_1.Selectors();
@@ -41,14 +30,6 @@ test("it only gets ids and classes", () => {
         return selector.rawName;
     });
     expect(actual.sort()).toEqual(expected);
-});
-test("It strips out attribute selectors", () => {
-    const expectedId = "a-valid-id";
-    const expectedClass = "a-valid-class";
-    const selectorId = new selector_1.Selector("#a-valid-id[type=button]");
-    expect(selectorId.cleanName).toEqual(expectedId);
-    const selectorClass = new selector_1.Selector(".a-valid-class[something]");
-    expect(selectorClass.cleanName).toEqual(expectedClass);
 });
 test("it does not return duplicate elements", () => {
     const input = [
@@ -67,11 +48,9 @@ test("it does not return duplicate elements", () => {
 test("it gets all selectors for a rule that are ids or classes", () => {
     const input = [
         "#my-id-right-here .a-child #and-another-id",
-        // "table #an-id-inside-a-normal-element",
         ".class tr #something",
     ];
     const expected = [
-        // "#an-id-inside-a-normal-element",
         "#and-another-id",
         "#my-id-right-here",
         "#something",
@@ -209,24 +188,4 @@ test("it correctly splits on >", () => {
     });
     expect(actual.sort()).toEqual(expected);
 });
-// TODO
-// test("it finds selectors after HTML elements", () => {
-// const input = ["tr #an-id"];
-// const expected = ["#an-id"];
-// const selectors = new Selectors();
-// const actual = selectors.getFrom(input);
-// expect(actual).toEqual(expected);
-// });
-// TODO
-// test("it displays the line number of the match in the output", () => {
-// });
-//
-//
-// TODO
-// test("It strips out all {'s and the content between them", () => {
-//     const actual = ".highlight { color: #009999; }";
-//     const expected = "highlight";
-//     const selector = new Selector(actual);
-//     expect(selector.cleanName).toEqual(expected);
-// });
 //# sourceMappingURL=main.test.js.map
