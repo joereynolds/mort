@@ -54,6 +54,14 @@ or
 echo "#my-selector-to-hunt-for" | mort
 ```
 
+**Multiple CSS files**
+
+Pipe multiple CSS files to `mort`.
+
+```
+ls assets/css/*.css | xargs -L1 mort -v -f 
+```
+
 ## Options
 
 ```
