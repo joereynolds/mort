@@ -56,7 +56,7 @@ echo "#my-selector-to-hunt-for" | mort
 
 **Multiple CSS files**
 
-Pipe multiple CSS files to `mort`.
+It's possible to scan multiple CSS files with `mort`.
 
 ```
 ls assets/css/*.css | xargs -L1 mort -v -f 
@@ -115,7 +115,7 @@ Level 3 displays level 1 + level 2 and shows all selectors it is searching throu
 
 ### -f --file
 
-The file to run `mort` against. This is required at all times.
+The file to run `mort` against. If unspecified, `mort` will read from stdin.
 
 ### -p --program
 
