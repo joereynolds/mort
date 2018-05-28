@@ -1,7 +1,7 @@
 old_version=$(grep version package.json)
 
 echo "This is the old versions number: $old_version"
-echo "what version shall we bump it to?"
+echo "what version shall we bump it to? (Just the number i.e. 2.3.5)"
 
 read new_version
 
@@ -19,6 +19,8 @@ commit_id=$(git log | head -n1 | awk '{print $2}')
 
 git tag -a v$new_version $commit_id
 
-git push origin v$new_version
-git push origin master
-npm publish
+echo "Once you're certain about your changes, run these commands:"
+
+echo "git push origin v$new_version"
+echo "git push origin master"
+echo "npm publish"
