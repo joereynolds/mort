@@ -23,7 +23,11 @@ class Selector {
         return Boolean(this.rawName.match(pseudoSelectorMatch));
     }
     isIdOrClass() {
-        return (this.rawName.startsWith(this.id) || this.rawName.startsWith(this.class));
+        return (this.isValidId(this.rawName) || this.rawName.startsWith(this.class));
+    }
+    isValidId(id) {
+        const idRegex = new RegExp("^#[a-z|A-Z]+");
+        return idRegex.test(id);
     }
     /**
      * Set the highest count found for a selector

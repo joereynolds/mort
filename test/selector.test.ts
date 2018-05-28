@@ -27,6 +27,22 @@ test("it is instantiated with a default line count of 0", () => {
     expect(selector.lineCount).toEqual(0);
 });
 
+// TODO refactor this and use jest-each instead
+test("it knows an invalid id when it sees one 1", () => {
+    const invalidSelector = new Selector("#34");
+    expect(invalidSelector.isValidId(invalidSelector.rawName)).toEqual(false);
+});
+
+test("it knows an invalid id when it sees one 2", () => {
+    const invalidSelector = new Selector("#{animal}-type");
+    expect(invalidSelector.isValidId(invalidSelector.rawName)).toEqual(false);
+});
+
+test("it knows an valid id when it sees one 2", () => {
+    const validSelector = new Selector("#some-id");
+    expect(validSelector.isValidId(validSelector.rawName)).toEqual(true);
+});
+
 // https://github.com/joereynolds/mort/issues/7
 test("it strips punctuation from the selector", () => {
     const expectedId = "id-with-comma";

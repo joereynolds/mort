@@ -7,7 +7,7 @@ test("it uses stdin if no file is passed", done => {
     // finds the selector.
     const n = (Math.random() * 100000) + 100;
     shelltest()
-        .cmd(`echo "#${n}" | ${mort}`)
+        .cmd(`echo "#something-${n}" | ${mort}`)
         .expect("stdout", /0 usages found/)
         .end(done);
 });

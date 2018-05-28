@@ -34,7 +34,12 @@ class Selector {
     }
 
     public isIdOrClass(): boolean {
-        return (this.rawName.startsWith(this.id) || this.rawName.startsWith(this.class));
+        return (this.isValidId(this.rawName) || this.rawName.startsWith(this.class));
+    }
+
+    public isValidId(id: string): boolean {
+        const idRegex = new RegExp("^#[a-z|A-Z]+");
+        return idRegex.test(id);
     }
 
     /**
