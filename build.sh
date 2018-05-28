@@ -1,12 +1,9 @@
 old_version=$(grep version package.json)
 
-echo "This is the old versions number: $old_version"
-echo "what version shall we bump it to? (Just the number i.e. 2.3.5)"
+echo "Old versions number: $old_version"
+read -p "Enter the new version number (i.e. 2.3.5): " new_version
 
-read new_version
-
-echo "Bumping to $new_version..."
-
+echo "Bumping to $new_version in package.json and src/main.ts"
 sed -i "s/\"version\":.*/\"version\": \"$new_version\",/" package.json
 sed -i "s/const version.*/const version = \"$new_version\";/" src/main.ts 
 
