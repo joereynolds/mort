@@ -29,3 +29,8 @@ and publish to npm
 ```
 npm publish
 ```
+
+# Useful CSS References
+
+https://drafts.csswg.org/selectors-3/#id-selectors
+https://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
