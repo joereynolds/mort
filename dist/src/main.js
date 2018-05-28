@@ -11,7 +11,7 @@ const program = require("commander");
 const commandExists = require("command-exists").sync;
 const process = require("process");
 const executable = new program_1.Program();
-const version = "1.3.0";
+const version = "1.4.0";
 function increaseVerbosity(v, total) {
     return total + 1;
 }
