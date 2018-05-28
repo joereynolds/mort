@@ -26,3 +26,15 @@ test("it is instantiated with a default line count of 0", () => {
     const selector = new Selector("#something");
     expect(selector.lineCount).toEqual(0);
 });
+
+// https://github.com/joereynolds/mort/issues/7
+test("it strips punctuation from the selector", () => {
+    const expectedId = "id-with-comma";
+    const expectedClass = "class-with-comma";
+
+    const selectorId = new Selector("#id-with-comma,");
+    expect(selectorId.cleanName).toEqual(expectedId);
+
+    const selectorClass = new Selector(".class-with-comma,");
+    expect(selectorClass.cleanName).toEqual(expectedClass);
+});

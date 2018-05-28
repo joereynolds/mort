@@ -5,7 +5,7 @@ const selectors_1 = require("../selectors");
 class RipGrep {
     run(cssFilePath, searchOnly = ".", printer = null) {
         const selectors = new selectors_1.Selectors();
-        const cleanSelectors = selectors.clean(selectors.fromFile(cssFilePath));
+        const cleanSelectors = selectors.fromFile(cssFilePath);
         return selectors.findUsages(this, searchOnly, cleanSelectors, printer);
     }
     call(selector, path) {

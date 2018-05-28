@@ -31,12 +31,11 @@ class Selectors {
         //
         // We also only push an element once, no duplicates.
         selectors.forEach((selector, index) => {
-            const selectorr = new selector_1.Selector(selector);
-            const l = index;
+            const selectorr = new selector_1.Selector(selector.trim());
             if (selectorr.isIdOrClass()) {
                 const elements = splitRetain(selector, /(\.|#|>|\s+)/g, { leadingSeparator: true });
                 elements.forEach(element => {
-                    const splitSelector = new selector_1.Selector(element);
+                    const splitSelector = new selector_1.Selector(element.trim());
                     if (splitSelector.isIdOrClass()
                         && !splitSelector.hasPseudoSelector()
                         && !alreadyAddedSelectors.includes(element)) {
@@ -53,9 +52,6 @@ class Selectors {
                 : b.rawName > a.rawName ? -1
                     : 0;
         });
-    }
-    clean(selectors) {
-        return selectors.filter(selector => selector.rawName !== "");
     }
     /**
      * Brings back an array of objects in the following format:

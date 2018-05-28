@@ -8,7 +8,7 @@ class RipGrep implements IGrep {
 
     public run(cssFilePath: string, searchOnly: string = ".", printer: Printer | null = null): Selector[]  {
         const selectors = new Selectors();
-        const cleanSelectors = selectors.clean(selectors.fromFile(cssFilePath));
+        const cleanSelectors = selectors.fromFile(cssFilePath);
         return selectors.findUsages(this, searchOnly, cleanSelectors, printer);
     }
 

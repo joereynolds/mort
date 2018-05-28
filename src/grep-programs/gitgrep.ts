@@ -6,26 +6,22 @@ import { Selectors } from "../selectors";
 
 class GitGrep implements IGrep {
 
-    public readonly executable: string = "git";
-    public readonly ignoreCase: string = "-i";
-    public readonly filesToIgnore: string = ":!*.css";
-
     public run(cssFilePath: string, searchOnly: string = "", printer: Printer | null = null): Selector[]  {
         const selectors = new Selectors();
-        const cleanSelectors = selectors.clean(selectors.fromFile(cssFilePath));
+        const cleanSelectors = selectors.fromFile(cssFilePath);
         return selectors.findUsages(this, searchOnly, cleanSelectors, printer);
     }
 
     public call(selector: string, path: string) {
 
         const call = child_process.spawnSync(
-            this.executable,
+            "git",
             [
                 "grep", // subcommand
-                this.ignoreCase,
+                "-i",
                 selector,
-                this.filesToIgnore,
-                ":!*.scss", // put it in separately because it doesn't like spaces in the command, refactor this.
+                ":!*.css",
+                ":!*.scss",
                 path,
             ],
             {

@@ -31,6 +31,23 @@ test("it only gets ids and classes", () => {
     });
     expect(actual.sort()).toEqual(expected);
 });
+test("it strips whitespace when it gets a selector", () => {
+    const selectors = new selectors_1.Selectors();
+    const input = [
+        "#not-indented",
+        "   .tab-indented",
+        " #some-spaces",
+    ];
+    const expected = [
+        "#not-indented",
+        "#some-spaces",
+        ".tab-indented",
+    ];
+    const actual = selectors.getFrom(input).map(selector => {
+        return selector.rawName;
+    });
+    expect(actual).toEqual(expected);
+});
 test("it does not return duplicate elements", () => {
     const input = [
         "#a-test",
@@ -126,15 +143,6 @@ test("It can handle unix and windows line endings", () => {
         return selector.rawName;
     });
     expect(actual.sort()).toEqual(expected);
-});
-// https://github.com/joereynolds/mort/issues/7
-test("it strips punctuation from the selector", () => {
-    const expectedId = "id-with-comma";
-    const expectedClass = "class-with-comma";
-    const selectorId = new selector_1.Selector("#id-with-comma,");
-    expect(selectorId.cleanName).toEqual(expectedId);
-    const selectorClass = new selector_1.Selector(".class-with-comma,");
-    expect(selectorClass.cleanName).toEqual(expectedClass);
 });
 // https://github.com/joereynolds/mort/issues/8
 test("it searches chained selectors separately", () => {
