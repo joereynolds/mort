@@ -150,12 +150,3 @@ Note that grep is incredibly slow so is not recommended
     - grep (Not recommended, very slow with mort)
 
 **Note that this tool can't detect all use cases. For example, string-concatting a selector in JS will probably bypass the tool.**
-
-# Troubleshooting
-
-**There's no shell output in verbose mode.**
-
-The "command used" doesn't display in Node 9.x.x. until a workaround is made, use 8.x.x.  
-
-I recommend [nvm](https://github.com/creationix/nvm).
-
