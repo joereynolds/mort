@@ -29,6 +29,19 @@ class Grep implements IGrep {
             },
         );
 
+        // Seems to be some deviation between node 8 and 9>
+        // where args is empty on 9 and greater.
+        // We'll just force it in instead...
+        call.args = [
+            "grep", 
+            "-r",
+            "-i",
+            "--exclude=*.css",
+            "--exclude=*.scss",
+            selector,
+            path,
+        ];
+
         return call;
     }
 }

@@ -73,7 +73,7 @@ class Selectors {
             const call = grepProgram.call(selector.cleanName, path);
             const listOfFiles = this.getFilesFromOutput(call.output[1]);
             let commandUsed = " ";
-            if (call && call.args) {
+            if (call) {
                 commandUsed = call.args.join(" ");
             }
             foundSelectors.push({

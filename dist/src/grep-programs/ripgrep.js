@@ -18,6 +18,10 @@ class RipGrep {
             stdio: "pipe",
             encoding: "utf-8",
         });
+        // Seems to be some deviation between node 8 and 9>
+        // where args is empty on 9 and greater.
+        // We'll just force it in instead...
+        call.args = ["rg", "-i", "--iglob=!*.{css,scss}", selector, path];
         return call;
     }
 }

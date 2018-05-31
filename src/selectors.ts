@@ -85,7 +85,7 @@ class Selectors {
 
             let commandUsed = " ";
 
-            if (call && call.args) {
+            if (call) {
                 commandUsed = call.args.join(" ");
             }
 
