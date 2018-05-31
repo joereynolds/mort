@@ -62,6 +62,12 @@ It's possible to scan multiple CSS files with `mort`.
 ls assets/css/*.css | xargs -L1 mort -v -f 
 ```
 
+Ignoring some files with `find`
+
+```
+find -iname *.scss -not -path "./node_modules/*" | xargs -L1 mort -vf
+```
+
 ## Options
 
 ```
