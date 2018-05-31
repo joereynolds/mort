@@ -130,7 +130,7 @@ class Selectors {
                 // We have two divide by 2 because for some reason
                 // The file is twice the line count of the original
                 // file, TODO - Fix this.
-                const lineCount = Math.floor((i - index) / 2);
+                const lineCount = Math.floor((i - index) / 2) + 1;
                 return lineCount;
             }
         }
