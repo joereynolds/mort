@@ -5,12 +5,10 @@ const gitgrep_1 = require("./grep-programs/gitgrep");
 const grep_1 = require("./grep-programs/grep");
 const ripgrep_1 = require("./grep-programs/ripgrep");
 const printer_1 = require("./printer");
-const program_1 = require("./program");
 const fs = require("fs");
 const program = require("commander");
 const commandExists = require("command-exists").sync;
 const process = require("process");
-const executable = new program_1.Program();
 const version = "1.4.0";
 function increaseVerbosity(v, total) {
     return total + 1;

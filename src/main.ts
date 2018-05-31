@@ -5,14 +5,12 @@ import { Grep } from "./grep-programs/grep";
 import { RipGrep } from "./grep-programs/ripgrep";
 import { IGrep } from "./interfaces/IGrep";
 import { Printer } from "./printer";
-import { Program } from "./program";
 
 const fs = require("fs");
 const program = require("commander");
 const commandExists = require("command-exists").sync;
 const process = require("process");
 
-const executable = new Program();
 const version = "1.4.0";
 
 function increaseVerbosity(v: any, total: any) {
