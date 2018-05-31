@@ -9,20 +9,6 @@ test("our grep program returns an object of results", () => {
     const ripgrep = new ripgrep_1.RipGrep();
     expect(typeof ripgrep.run("test/fixtures/test.css")).toEqual("object");
 });
-// TODO Rewrite now that we're using selector class
-// Fixture data may need updating
-// test("it ignores pseudoselectors", () => {
-//     const selectorOne = new Selector("a-valid-id-with-pseudo:hover");
-//     const expectedSelector= new Selector("a-valid-id");
-//     const selectors = new Selectors();
-//     const grepProgram = new RipGrep();
-//     const actual = selectors.findUsages(
-//         grepProgram,
-//         "test/fixtures",
-//         [expectedSelector],
-//     );
-//     expect(actual).toEqual(1);
-// });
 test("it only gets ids and classes", () => {
     const expected = ["#a-valid-id", ".a-valid-class"];
     const selectors = new selectors_1.Selectors();

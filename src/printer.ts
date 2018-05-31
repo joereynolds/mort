@@ -49,6 +49,10 @@ class Printer {
         }
     }
 
+    public printDone() {
+        console.log(`${chalk.bgGreen("Done!")}`);
+    }
+
     public warnAboutFileNotFound(file: string) {
         this.warn(`Failed to open ${file}. Does it exist?`);
     }

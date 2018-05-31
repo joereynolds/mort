@@ -106,6 +106,10 @@ class Selectors {
             }
         });
 
+        if (printer !== null) {
+            printer.printDone();
+        }
+
         return foundSelectors;
     }
 
