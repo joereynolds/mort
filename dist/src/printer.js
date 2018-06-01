@@ -22,7 +22,8 @@ class Printer {
         let usagesMessage = `${selector.usages} usages found. ${rawName} can probably be removed.`;
         if (this.verbose >= 1) {
             const lineCount = chalk.yellow(`(${selector.selector.lineCount} lines)`);
-            usagesMessage = `${selector.usages} usages found. ${rawName} ${lineCount} can probably be removed.`;
+            const lineNumber = chalk.yellow(`:${selector.selector.lineNumber}`);
+            usagesMessage = `${selector.usages} usages found. ${rawName}${lineNumber} ${lineCount} can probably be removed.`;
         }
         if (this.verbose === 3) {
             console.log(`Searching for ${chalk.green(selector.selector.rawName)}`);

@@ -5,6 +5,7 @@ const ripgrep_1 = require("../src/grep-programs/ripgrep");
 const selector_1 = require("../src/selector");
 const selectors_1 = require("../src/selectors");
 const child_process = require("child_process");
+const fs = require("fs");
 test("our grep program returns an object of results", () => {
     const ripgrep = new ripgrep_1.RipGrep();
     expect(typeof ripgrep.run("test/fixtures/test.css")).toEqual("object");
@@ -164,6 +165,14 @@ test("it returns the shell command as a string", () => {
     const result = selectors.findUsages(ripgrep, "test/fixtures/no-usages.css", [selector]);
     const actual = result[0].commandUsed;
     expect(actual).toEqual(expected);
+});
+// https://github.com/joereynolds/mort/issues/48
+test("The length of selectors is returned is correct", () => {
+    const selectors = new selectors_1.Selectors();
+    const fileContents = fs.readFileSync("test/fixtures/test.css", "utf8");
+    const actual = fileContents.split(selectors.fileSplitRegex).length;
+    const expected = 11;
+    expect(actual).toEqual(11);
 });
 test("it correctly splits on >", () => {
     const input = [
