@@ -27,12 +27,12 @@ class Printer {
     public printUsage(selector: any) {
 
         const rawName = chalk.green(selector.selector.rawName);
-        const lineNumber = selector.selector.lineNumber;
-        let usagesMessage = `${selector.usages} usages found. ${rawName}:${lineNumber} can probably be removed.`;
+        let usagesMessage = `${selector.usages} usages found. ${rawName} can probably be removed.`;
 
         if (this.verbose >= 1) {
             const lineCount = chalk.yellow(`(${selector.selector.lineCount} lines)`);
-            usagesMessage = `${selector.usages} usages found. ${rawName}:${lineNumber} ${lineCount} can probably be removed.`;
+            const lineNumber = chalk.yellow(`:${selector.selector.lineNumber}`);
+            usagesMessage = `${selector.usages} usages found. ${rawName}${lineNumber} ${lineCount} can probably be removed.`;
         }
 
         if (this.verbose === 3) {
