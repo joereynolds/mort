@@ -3,6 +3,7 @@ class Selector {
     public rawName: string;
     public cleanName: string;
     public lineCount: number;
+    public lineNumber: number;
 
     private readonly id: string = "#";
     private readonly class: string = ".";
@@ -11,6 +12,7 @@ class Selector {
         this.rawName = rawName;
         this.cleanName = this.clean(rawName);
         this.lineCount = 0;
+        this.lineNumber = 0;
     }
 
     public clean(name: string): string {
@@ -49,6 +51,10 @@ class Selector {
         if (lineCount > this.lineCount) {
             this.lineCount = lineCount;
         }
+    }
+
+    public setLineNumber(lineNumber: number) {
+        this.lineNumber = lineNumber;
     }
 }
 

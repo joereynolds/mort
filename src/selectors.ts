@@ -7,9 +7,11 @@ import { Selector} from "./selector";
 
 class Selectors {
 
+    public readonly fileSplitRegex: RegExp = new RegExp("\r\n|\n", "g");
+
     public fromFile(file: string): Selector[] {
         const fileContents: string = fs.readFileSync(file, "utf8");
-        const selectors = this.getFrom(fileContents.split(/(\r\n|\n)/g));
+        const selectors = this.getFrom(fileContents.split(this.fileSplitRegex));
         return selectors;
     }
 
@@ -48,6 +50,7 @@ class Selectors {
                     ) {
                         // @ts-ignore
                         splitSelector.setLineCount(this.getLineCountForSelector(selectors, index));
+                        splitSelector.setLineNumber(index + 1);
                         alreadyAddedSelectors.push(element);
                         allSelectors.push(splitSelector);
                     }
@@ -127,10 +130,7 @@ class Selectors {
         // in the array until we see a }
         for (let i = index; i < selectors.length; i++) {
             if (selectors[i].includes("}")) {
-                // We have two divide by 2 because for some reason
-                // The file is twice the line count of the original
-                // file, TODO - Fix this.
-                const lineCount = Math.floor((i - index) / 2) + 1;
+                const lineCount = Math.floor((i - index)) + 1;
                 return lineCount;
             }
         }
