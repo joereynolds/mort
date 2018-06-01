@@ -4,9 +4,12 @@ const fs = require("fs");
 const splitRetain = require("split-retain");
 const selector_1 = require("./selector");
 class Selectors {
+    constructor() {
+        this.fileSplitRegex = new RegExp("\r\n|\n", "g");
+    }
     fromFile(file) {
         const fileContents = fs.readFileSync(file, "utf8");
-        const selectors = this.getFrom(fileContents.split(/(\r\n|\n)/g));
+        const selectors = this.getFrom(fileContents.split(this.fileSplitRegex));
         return selectors;
     }
     /**
@@ -41,6 +44,7 @@ class Selectors {
                         && !alreadyAddedSelectors.includes(element)) {
                         // @ts-ignore
                         splitSelector.setLineCount(this.getLineCountForSelector(selectors, index));
+                        splitSelector.setLineNumber(index + 1);
                         alreadyAddedSelectors.push(element);
                         allSelectors.push(splitSelector);
                     }
@@ -108,10 +112,7 @@ class Selectors {
         // in the array until we see a }
         for (let i = index; i < selectors.length; i++) {
             if (selectors[i].includes("}")) {
-                // We have two divide by 2 because for some reason
-                // The file is twice the line count of the original
-                // file, TODO - Fix this.
-                const lineCount = Math.floor((i - index) / 2) + 1;
+                const lineCount = Math.floor((i - index)) + 1;
                 return lineCount;
             }
         }

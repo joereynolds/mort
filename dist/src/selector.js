@@ -7,6 +7,7 @@ class Selector {
         this.rawName = rawName;
         this.cleanName = this.clean(rawName);
         this.lineCount = 0;
+        this.lineNumber = 0;
     }
     clean(name) {
         const re = new RegExp("("
@@ -36,6 +37,9 @@ class Selector {
         if (lineCount > this.lineCount) {
             this.lineCount = lineCount;
         }
+    }
+    setLineNumber(lineNumber) {
+        this.lineNumber = lineNumber;
     }
 }
 exports.Selector = Selector;

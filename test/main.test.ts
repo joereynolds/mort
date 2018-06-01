@@ -4,6 +4,7 @@ import { Selector } from "../src/selector";
 import { Selectors } from "../src/selectors";
 
 const child_process = require("child_process");
+const fs = require("fs");
 
 test("our grep program returns an object of results", () => {
     const ripgrep = new RipGrep();
@@ -218,6 +219,15 @@ test("it returns the shell command as a string", () => {
 
     const actual = result[0].commandUsed;
     expect(actual).toEqual(expected);
+});
+
+// https://github.com/joereynolds/mort/issues/48
+test("The length of selectors is returned is correct", () => {
+    const selectors = new Selectors();
+    const fileContents: string = fs.readFileSync("test/fixtures/test.css", "utf8");
+    const actual = fileContents.split(selectors.fileSplitRegex).length;
+    const expected = 11;
+    expect(actual).toEqual(11);
 });
 
 test("it correctly splits on >", () => {

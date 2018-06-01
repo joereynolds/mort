@@ -19,10 +19,11 @@ class Printer {
      */
     printUsage(selector) {
         const rawName = chalk.green(selector.selector.rawName);
-        let usagesMessage = `${selector.usages} usages found. ${rawName} can probably be removed.`;
+        const lineNumber = selector.selector.lineNumber;
+        let usagesMessage = `${selector.usages} usages found. ${rawName}:${lineNumber} can probably be removed.`;
         if (this.verbose >= 1) {
             const lineCount = chalk.yellow(`(${selector.selector.lineCount} lines)`);
-            usagesMessage = `${selector.usages} usages found. ${rawName} ${lineCount} can probably be removed.`;
+            usagesMessage = `${selector.usages} usages found. ${rawName}:${lineNumber} ${lineCount} can probably be removed.`;
         }
         if (this.verbose === 3) {
             console.log(`Searching for ${chalk.green(selector.selector.rawName)}`);
