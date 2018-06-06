@@ -9,6 +9,9 @@ Detects dead CSS.
 
 # Installing
 
+You can use the binaries on the [releases page](https://github.com/joereynolds/mort/releases) for versions 1.5 and above.
+
+Or if you like, use `npm`.
 ```
 npm i mort-css
 ```
