@@ -12,7 +12,7 @@ npm run build
 git add .
 git commit
 
-commit_id=$(git log | head -n1 | awk '{print $2}')
+commit_id=$(git rev-parse HEAD)
 
 git tag -a v$new_version $commit_id
 
