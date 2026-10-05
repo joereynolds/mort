@@ -1,0 +1,78 @@
+mort.nimble
+  s_6f4ceb01010823::t_1e6b05c17fc443 10,12-20,24-25,28-30
+  s_6f4ceb01010823::t_a7e500591df6fc 11,21-23,26-27
+  s_6f4ceb01010823::t_74d627734666d4 1-9
+.travis.yml
+  s_6f4ceb01010823::t_a7e500591df6fc 1,7-9,15-16
+src/mortpkg/printer.nim
+  s_6f4ceb01010823::t_8deeeac0ad48b2 85-91
+  s_6f4ceb01010823::t_523c8cb318ced5 3
+  s_6f4ceb01010823::t_9f1b1f5de29a4c 1-2,4-84
+src/mortpkg/selectors.nim
+  s_6f4ceb01010823::t_523c8cb318ced5 1-2,5-99,153-155,176-178,182-199
+  s_6f4ceb01010823::t_8deeeac0ad48b2 3-4,100-152,156-175,179-181
+src/mortpkg/grep_programs/gitgrep.nim
+  s_6f4ceb01010823::t_2dc3c36b6b0090 1-2,4-9
+  s_6f4ceb01010823::t_5a8ffd78712f86 3,10-16
+src/mortpkg/grep_programs/grep.nim
+  s_6f4ceb01010823::t_5a8ffd78712f86 1,3,10-16
+  s_6f4ceb01010823::t_2dc3c36b6b0090 2,4-9
+build.sh
+  s_6f4ceb01010823::t_a7e500591df6fc 1-3,5,7-8,10-14,21
+CONTRIBUTING.md
+  s_6f4ceb01010823::t_07ea6ab2b6d13c 1-19,46-49,68
+  s_6f4ceb01010823::t_7edf7b2783dc92 20-41
+src/mortpkg/multimatch.nim
+  s_6f4ceb01010823::t_e47812991c5987 1-105
+tests/tmultimatch.nim
+  s_6f4ceb01010823::t_ab8fb9f7c449ad 1-89
+src/mortpkg/igrep.nim
+  s_6f4ceb01010823::t_e09cfcaabefa9a 1,8,12,15
+  s_6f4ceb01010823::t_5a8ffd78712f86 2-7,9-11,13-14,16-17
+tests/tselectors.nim
+  s_6f4ceb01010823::t_5e1c8fd85c7809 4-5,143-145,150,152,156-233
+  s_6f4ceb01010823::t_a85edb1bc3f700 1-3,6-142,146-149,151,153-155
+README.md
+  s_6f4ceb01010823::t_ae3f74c0f33f16 121-126,132-134,167-204
+  s_6f4ceb01010823::t_07ea6ab2b6d13c 14-16,18,21,24,27-28,166
+  s_6f4ceb01010823::t_945d30c8fc065a 205
+src/mortpkg/grep_programs/ripgrep.nim
+  s_6f4ceb01010823::t_5a8ffd78712f86 3,10-15
+  s_6f4ceb01010823::t_2dc3c36b6b0090 1-2,4-9
+src/mortpkg/selector.nim
+  s_6f4ceb01010823::t_2f24adc876c0bd 1-11,14-26,28-63,65-79,81-88
+  s_6f4ceb01010823::t_aea86fe593b9e2 12-13,27,64,80
+src/mortpkg/cli.nim
+  s_6f4ceb01010823::t_bd5d4dd597310a 1-145
+src/mortpkg/shell.nim
+  s_6f4ceb01010823::t_e09cfcaabefa9a 1-29
+tests/tselector.nim
+  s_6f4ceb01010823::t_d5c44eec40eec5 1-82
+tests/tintegration.nim
+  s_6f4ceb01010823::t_3c01531db7e877 36-40,42-46
+  s_6f4ceb01010823::t_af3e0d11e67199 1-35,41,47-79
+.gitignore
+  s_6f4ceb01010823::t_a7e500591df6fc 1-5
+src/mort.nim
+  s_6f4ceb01010823::t_5a15abd7446a67 3,28
+  s_6f4ceb01010823::t_ce460da517ca96 1-2,4-27,29-57
+tests/tcli.nim
+  s_6f4ceb01010823::t_5f1987615f565f 1-2,4-101
+  s_6f4ceb01010823::t_86049311ec78fc 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e7dce798014e8b3105443ff747e5810b0cbc4e0b",
+  "prompts": {},
+  "sessions": {
+    "s_6f4ceb01010823": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "aedefd75-b562-4426-aec6-7cf92a938a41",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Joe Reynolds <joereynolds952@gmail.com>"
+    }
+  }
+}
