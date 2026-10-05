@@ -1,2 +1,5 @@
-node_modules
-package-lock.json
+# Build output
+/mort
+nimcache/
+nimblecache/
+htmldocs/

@@ -11,16 +11,20 @@ Detects dead CSS.
 
 You can use the binaries on the [releases page](https://github.com/joereynolds/mort/releases) for versions 1.5 and above.
 
-Or if you like, use `npm`.
-```
-npm i mort-css
-```
-
-Or globally with
+Or build it yourself. `mort` is written in [Nim](https://nim-lang.org), so
+you'll need the Nim toolchain (1.6 or newer), then:
 
 ```
-npm i -g mort-css
+nimble install
 ```
+
+To build from a checkout without installing:
+
+```
+nimble build -d:release
+```
+
+That leaves a `mort` binary in the project root.
 
 You should then be able to run `mort`.
 
@@ -114,13 +118,20 @@ Level 1 displays what file it is scanning and the line count for that selector.
 
 `mort -f somefile.css -vv`
 
-Level 2 displays level 1 + The command used to find the selector
+Level 2 displays level 1 + the command that finds that selector.
+
+`mort` searches for every selector in a single pass (see
+[How mort searches](#how-mort-searches)), so the command shown is the
+equivalent search for that one selector rather than the literal command run.
+It is the one worth re-running by hand to check a finding.
 
 **Level 3**
 
 `mort -f somefile.css -vvv`
 
-Level 3 displays level 1 + level 2 and shows all selectors it is searching through (regardless of whether they are used or not).
+Level 3 displays level 1 + level 2, shows all selectors it is searching
+through (regardless of whether they are used or not), and prints the single
+batched command it actually ran.
 
 ### -f --file
 
@@ -151,5 +162,45 @@ Note that grep is incredibly slow so is not recommended
     - ripgrep
     - git grep
     - grep (Not recommended, very slow with mort)
+
+To build from source you also need Nim 1.6 or newer.
+
+# How mort searches
+
+`mort` runs **one** search for the whole stylesheet, not one per selector.
+It writes every selector name to a temporary file, hands that to the grep
+program with `-f`, and asks for NUL-separated output so each matching line
+arrives as `path\0line`. It then works out which selectors each line
+contains using an [Aho-Corasick](https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm)
+automaton, so a line is scanned once no matter how many selectors there are.
+
+This matters a lot on real stylesheets, because the old behaviour of one
+grep process per selector cost a full walk of your codebase per selector:
+
+| Selectors | One grep per selector | One grep total |
+| --------- | --------------------- | -------------- |
+| 100       | 3.1 s                 | 0.07 s         |
+| 500       | 18.6 s                | 0.04 s         |
+| 2000      | 73.1 s                | 0.14 s         |
+
+(845-file tree; the batched time tracks the size of your codebase, not the
+number of selectors.)
+
+Two consequences worth knowing about:
+
+- **Selectors are matched literally, not as regexes.** The grep programs are
+  given `-F`. Previously a selector such as `.center()` was handed to grep as
+  a pattern, so its `()` was an empty regex group and it matched every
+  occurrence of `center`; `#|pipe` matched every line in the codebase, via
+  the `|` alternation; and `.average(16px,` made ripgrep fail to parse its
+  regex, which looked like "0 usages" because the error was discarded.
+  Literal matching reports what you actually asked for. Plain CSS selectors
+  are unaffected, since they contain no regex metacharacters.
+- **Case-insensitive matching is ASCII-only** when deciding which selector a
+  line belongs to. The grep programs still do their own `-i` matching, so
+  nothing is over-reported; but a selector containing a non-ASCII letter that
+  differs in case from its usage (`.Ümlaut` against `ümlaut`) would be
+  missed. CSS identifiers are overwhelmingly ASCII, so this is unlikely to
+  bite.
 
 **Note that this tool can't detect all use cases. For example, string-concatting a selector in JS will probably bypass the tool.**
